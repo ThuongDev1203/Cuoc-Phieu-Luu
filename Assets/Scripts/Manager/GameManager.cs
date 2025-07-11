@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UIs;
+using Animation.Player.Controller;
 
 namespace Manager
 {
@@ -15,6 +16,7 @@ namespace Manager
         [Header("Managers")]
         public UIManager uiManager;
         public LevelManager levelManager;
+        public FloatingJoystick Joystick => uiManager.uiGame.joystick;
 
         private void Awake()
         {
@@ -53,7 +55,7 @@ namespace Manager
         {
             int currentLevel = GetCurrentLevel();
 
-            if (currentLevel < 0 || currentLevel >= levelManager.sceneBuildIndices.Count)
+            if (currentLevel < 0 || currentLevel >= levelManager.levelNames.Count)
             {
                 Debug.LogWarning($"CurrentLevel {currentLevel} vượt giới hạn! Reset về 0.");
                 currentLevel = 0;
@@ -61,6 +63,5 @@ namespace Manager
 
             levelManager.LoadLevel(currentLevel);
         }
-
     }
 }

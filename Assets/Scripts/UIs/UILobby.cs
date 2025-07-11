@@ -57,6 +57,7 @@ namespace UIs
         private void OnPlayButtonClicked()
         {
             Hide();
+            GameManager.Instance.uiManager.uiGame.Show();
             GameManager.Instance.LoadGame();
         }
 

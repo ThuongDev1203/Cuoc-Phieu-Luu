@@ -12,13 +12,14 @@ namespace UIs
     public class UIManager : MonoBehaviour
     {
         [Header("UI Panels")]
-        //public UIGame uiGame;
+        public UIGame uiGame;
         public UILobby uiLobby;
         public UIShop uiShop;
         public UIStage uiStage;
 
         [Header("UI Dialogs")]
         public UISetting uiSetting;
+        public UIPause uiPause;
 
         public void ShowPanel(UIPanel panel)
         {
@@ -28,8 +29,8 @@ namespace UIs
 
         public void HideAllPanels()
         {
-            // if (uiGame != null)
-            //     uiGame.Hide();
+            if (uiGame != null)
+                uiGame.Hide();
 
             if (uiLobby != null)
                 uiLobby.Hide();
@@ -42,6 +43,9 @@ namespace UIs
 
             if (uiStage != null)
                 uiStage.Hide();
+
+            if (uiPause != null)
+                uiPause.Hide();
         }
 
         public void ShowDialog(UIDialog dialog)
