@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Animation.Player.Controller;
 
 namespace Animation.Player.States
@@ -8,7 +5,7 @@ namespace Animation.Player.States
     /// <summary>
     /// Base class for player states
     /// </summary>
-    public abstract class PlayerState : MonoBehaviour
+    public abstract class PlayerState
     {
         protected PlayerController player;
 

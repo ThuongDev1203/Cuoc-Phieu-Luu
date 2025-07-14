@@ -21,7 +21,12 @@ namespace Animation.Player.States
         {
             if (player.Anim.IsAnimationFinished())
             {
-                player.ChangeState(new IdleState(player));
+                if (!player.IsGrounded)
+                    player.ChangeState(new InAirState(player));
+                else if (Mathf.Abs(player.InputX) > 0.1f)
+                    player.ChangeState(new RunState(player));
+                else
+                    player.ChangeState(new IdleState(player));
             }
         }
     }

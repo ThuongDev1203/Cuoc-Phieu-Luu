@@ -26,13 +26,19 @@ namespace Animation.Player.Controller
 
 
         public Rigidbody2D Rigidbody => rb;
-
         private bool jumpPressed;
         public bool JumpPressed => jumpPressed;
 
         private FloatingJoystick joystick;
         private PlayerState currentState;
         private float moveDirection;
+        private int jumpCount = 0;
+        private int maxJumpCount = 1;
+        private bool wasGroundedLastFrame;
+
+        //Cool down attack
+        private float attackCooldown = 0.5f;
+        private float lastAttackTime = 0f;
 
         private void Awake()
         {
@@ -44,6 +50,7 @@ namespace Animation.Player.Controller
             if (playerSO != null)
             {
                 playerSO.LoadData();
+                maxJumpCount = playerSO.Data.maxJumpCount;
             }
             ChangeState(new IdleState(this));
         }
@@ -52,6 +59,13 @@ namespace Animation.Player.Controller
         {
             HandleInput();
             currentState?.Update();
+            anim.UpdateMovement(moveDirection * playerSO.Data.speed, IsGrounded, rb.velocity.y); // fix chạm ground của attack
+
+            if (IsGrounded && !wasGroundedLastFrame)
+            {
+                ResetJumpCount();
+            }
+            wasGroundedLastFrame = IsGrounded;
         }
 
         private void FixedUpdate()
@@ -76,13 +90,28 @@ namespace Animation.Player.Controller
 
         public void Jump()
         {
-            if (IsGrounded)
+            if (CanJump())
             {
-                rb.velocity = new Vector2(rb.velocity.x, JumpForce);
+                PerformJump();
             }
         }
 
+        private void PerformJump()
+        {
+            rb.velocity = new Vector2(rb.velocity.x, JumpForce);
+            jumpCount++;
+            ChangeState(new InAirState(this));
+        }
 
+        private bool CanJump()
+        {
+            return jumpCount < maxJumpCount;
+        }
+
+        private void ResetJumpCount()
+        {
+            jumpCount = 0;
+        }
 
         private void FlipCharacter(float direction)
         {
@@ -91,6 +120,7 @@ namespace Animation.Player.Controller
 
         public float InputX => moveDirection;
         public bool IsGrounded => Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+
         public PlayerAnimatorController Anim => anim;
         public string PlayerName => playerSO.Data.playerName;
         public float Speed => playerSO.Data.speed;
@@ -107,10 +137,26 @@ namespace Animation.Player.Controller
         public void ResetJumpPressed() => jumpPressed = false;
 
         // Gọi từ input system hoặc button để test animation
+        // public void TriggerAttack1() => ChangeState(new Attack1State(this));
+        // public void TriggerAttack2() => ChangeState(new Attack2State(this));
+        public void TriggerAttack1()
+        {
+            if (Time.time - lastAttackTime < attackCooldown) return;
+            lastAttackTime = Time.time;
+            //if (!(currentState is Attack1State))
+            ChangeState(new Attack1State(this));
+        }
+
+        public void TriggerAttack2()
+        {
+            if (Time.time - lastAttackTime < attackCooldown) return;
+            lastAttackTime = Time.time;
+            //if (!(currentState is Attack2State))
+            ChangeState(new Attack2State(this));
+        }
 
 
-        public void TriggerAttack1() => ChangeState(new Attack1State(this));
-        public void TriggerAttack2() => ChangeState(new Attack2State(this));
+
         public void TriggerDeath() => ChangeState(new DeathState(this));
         public void TriggerHit() => ChangeState(new HitState(this));
         public void TriggerShowOff() => ChangeState(new ShowOffState(this));

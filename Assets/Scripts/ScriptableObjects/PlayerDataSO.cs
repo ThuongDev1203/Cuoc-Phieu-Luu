@@ -12,5 +12,6 @@ namespace SriptableObjects
         public string playerName;
         public float speed = 5f;
         public float jumpForce = 10f;
+        public int maxJumpCount = 2;
     }
 }

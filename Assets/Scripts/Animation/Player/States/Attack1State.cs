@@ -14,7 +14,7 @@ namespace Animation.Player.States
 
         public override void Enter()
         {
-            player.Anim.TriggerAttack1();
+            player.Anim.TriggerAttack1(); // Gọi trigger trong Animator
         }
 
         public override void Update()
@@ -30,6 +30,4 @@ namespace Animation.Player.States
             }
         }
     }
-
-
 }

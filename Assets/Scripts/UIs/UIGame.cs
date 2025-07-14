@@ -76,6 +76,11 @@ namespace UIs
 
         private void OnAttack()
         {
+            if (playerController == null)
+            {
+                playerController = FindObjectOfType<PlayerController>();
+            }
+
             if (playerController != null)
             {
                 playerController.TriggerAttack1();
@@ -86,8 +91,14 @@ namespace UIs
             }
         }
 
+
         private void OnAttack2()
         {
+            if (playerController == null)
+            {
+                playerController = FindObjectOfType<PlayerController>();
+            }
+
             if (playerController != null)
             {
                 playerController.TriggerAttack2();
@@ -97,5 +108,6 @@ namespace UIs
                 Debug.LogWarning("PlayerController still not found!");
             }
         }
+
     }
 }
