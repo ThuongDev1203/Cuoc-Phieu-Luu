@@ -20,6 +20,7 @@ namespace UIs
         [Header("UI Dialogs")]
         public UISetting uiSetting;
         public UIPause uiPause;
+        public UIDeath uiDeath;
 
         public void ShowPanel(UIPanel panel)
         {
@@ -46,6 +47,9 @@ namespace UIs
 
             if (uiPause != null)
                 uiPause.Hide();
+
+            if (uiDeath != null)
+                uiDeath.Hide();
         }
 
         public void ShowDialog(UIDialog dialog)

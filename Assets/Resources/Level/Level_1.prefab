@@ -18731,6 +18731,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSO: {fileID: 11400000, guid: 285bec6b32b72c445b1580d0b061b364, type: 2}
+  _animatorController: {fileID: 1057641864822223452}
 --- !u!212 &729433578983209753
 SpriteRenderer:
   m_ObjectHideFlags: 0

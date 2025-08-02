@@ -206,7 +206,12 @@ namespace Animation.Player.Controller
 
 
 
-        public void TriggerDeath() => ChangeState(new DeathState(this));
+        public void TriggerDeath()
+        {
+            Debug.Log("TriggerDeath() được gọi trong PlayerController");
+            ChangeState(new DeathState(this));
+        }
+
         public void TriggerHit() => ChangeState(new HitState(this));
         public void TriggerShowOff() => ChangeState(new ShowOffState(this));
         public void TriggerInjured() => ChangeState(new InjuredState(this));
