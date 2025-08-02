@@ -1,14 +1,14 @@
 using UnityEngine;
-using SriptableObjects;
+using SriptableObjects.PlayerSO;
 
 [CreateAssetMenu(fileName = "PlayerSO", menuName = "ScriptableObjects/PlayerSO")]
 public class PlayerSO : ScriptableObject
 {
-    [SerializeField] private PlayerDataSO data;
-    public PlayerDataSO Data => data;
+    [SerializeField] private PlayerDataSO _data;
+    public PlayerDataSO Data => _data;
 
     public void LoadData()
     {
-        // Validate or preprocess if needed
+        // Optional logic here
     }
 }

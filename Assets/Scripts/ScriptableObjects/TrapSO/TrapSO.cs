@@ -1,9 +1,9 @@
 using UnityEngine;
-using SriptableObjects;
+using ScriptableObjects.TrapSO;
 
 [CreateAssetMenu(fileName = "TrapSO", menuName = "ScriptableObjects/TrapSO")]
 public class TrapSO : ScriptableObject
 {
-    [SerializeField] private TrapDataSO data;
-    public TrapDataSO Data => data;
+    [SerializeField] private TrapDataSO _data;
+    public TrapDataSO Data => _data;
 }

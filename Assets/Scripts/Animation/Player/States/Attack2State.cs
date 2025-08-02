@@ -15,6 +15,7 @@ namespace Animation.Player.States
         public override void Enter()
         {
             player.Anim.TriggerAttack2();
+            //player.ThrowDep();
         }
 
         public override void Update()

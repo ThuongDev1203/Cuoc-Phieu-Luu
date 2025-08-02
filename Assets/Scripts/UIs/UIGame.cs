@@ -4,6 +4,7 @@ using Manager;
 using UnityEngine;
 using UnityEngine.UI;
 using Animation.Player.Controller;
+using TMPro;
 
 namespace UIs
 {
@@ -20,6 +21,15 @@ namespace UIs
         public FloatingJoystick joystick;
         private PlayerController playerController;
 
+        private bool isAttack2OnCooldown = false;
+        private float attack2Cooldown = 5f;
+        private float attack2CooldownTimer;
+
+        [SerializeField] private Image attack2CooldownTile;
+        [SerializeField] private TMP_Text attack2CooldownText;
+
+
+
         void Start()
         {
             playerController = FindObjectOfType<PlayerController>();
@@ -29,6 +39,34 @@ namespace UIs
             attackButton.onClick.AddListener(OnAttack);
             attack2Button.onClick.AddListener(OnAttack2);
         }
+
+        void Update()
+        {
+            if (isAttack2OnCooldown)
+            {
+                attack2CooldownTimer -= Time.deltaTime;
+
+                float percent = attack2CooldownTimer / attack2Cooldown;
+                attack2CooldownTile.fillAmount = percent;
+
+                if (attack2CooldownText != null)
+                {
+                    attack2CooldownText.text = Mathf.CeilToInt(attack2CooldownTimer).ToString();
+                }
+
+                if (attack2CooldownTimer <= 0f)
+                {
+                    isAttack2OnCooldown = false;
+                    attack2Button.interactable = true;
+
+                    // Ẩn tile và text
+                    attack2CooldownTile.gameObject.SetActive(false);
+                    if (attack2CooldownText != null)
+                        attack2CooldownText.gameObject.SetActive(false);
+                }
+            }
+        }
+
 
         /// <summary>
         /// Show UI Game when entering the game.
@@ -95,19 +133,47 @@ namespace UIs
         private void OnAttack2()
         {
             if (playerController == null)
-            {
                 playerController = FindObjectOfType<PlayerController>();
-            }
 
-            if (playerController != null)
+            if (playerController != null && !isAttack2OnCooldown)
             {
                 playerController.TriggerAttack2();
-            }
-            else
-            {
-                Debug.LogWarning("PlayerController still not found!");
+
+                // Bắt đầu cooldown
+                isAttack2OnCooldown = true;
+                attack2CooldownTimer = attack2Cooldown;
+                attack2Button.interactable = false;
+
+                // Hiện tile và text khi vừa nhấn
+                attack2CooldownTile.gameObject.SetActive(true);
+                if (attack2CooldownText != null)
+                {
+                    attack2CooldownText.gameObject.SetActive(true);
+                    attack2CooldownText.text = attack2Cooldown.ToString("F0");
+                }
+
+                // Reset lại fill
+                attack2CooldownTile.fillAmount = 1f;
             }
         }
+
+
+        // private void OnAttack2()
+        // {
+        //     if (playerController == null)
+        //     {
+        //         playerController = FindObjectOfType<PlayerController>();
+        //     }
+
+        //     if (playerController != null)
+        //     {
+        //         playerController.TriggerAttack2();
+        //     }
+        //     else
+        //     {
+        //         Debug.LogWarning("PlayerController still not found!");
+        //     }
+        // }
 
     }
 }

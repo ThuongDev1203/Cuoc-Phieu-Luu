@@ -9,7 +9,7 @@ namespace Animation.Player.Controller
     /// </summary>
     public class PlayerAnimatorController : MonoBehaviour
     {
-        [SerializeField] private Animator animator;
+        [SerializeField] private Animator _animator;
 
         private readonly int speedHash = Animator.StringToHash("Speed");
         private readonly int isGroundedHash = Animator.StringToHash("IsGrounded");
@@ -27,26 +27,26 @@ namespace Animation.Player.Controller
         /// </summary>
         public void UpdateMovement(float speed, bool isGrounded, float verticalSpeed)
         {
-            animator.SetFloat(speedHash, Mathf.Abs(speed));
-            animator.SetBool(isGroundedHash, isGrounded);
-            animator.SetFloat(verticalSpeedHash, verticalSpeed);
+            _animator.SetFloat(speedHash, Mathf.Abs(speed));
+            _animator.SetBool(isGroundedHash, isGrounded);
+            _animator.SetFloat(verticalSpeedHash, verticalSpeed);
         }
 
-        public void TriggerAttack1() => animator.SetTrigger(attack1TriggerHash);
-        public void TriggerAttack2() => animator.SetTrigger(attack2TriggerHash);
-        public void TriggerHit() => animator.SetTrigger(hitTriggerHash);
-        public void TriggerDeath() => animator.SetTrigger(deathTriggerHash);
-        public void TriggerShowOff() => animator.SetTrigger(showOffTriggerHash);
-        public void TriggerInjured() => animator.SetTrigger(injuredTriggerHash);
-        public void TriggerIdlePoisoned() => animator.SetTrigger(idlePoisonedTriggerHash);
+        public void TriggerAttack1() => _animator.SetTrigger(attack1TriggerHash);
+        public void TriggerAttack2() => _animator.SetTrigger(attack2TriggerHash);
+        public void TriggerHit() => _animator.SetTrigger(hitTriggerHash);
+        public void TriggerDeath() => _animator.SetTrigger(deathTriggerHash);
+        public void TriggerShowOff() => _animator.SetTrigger(showOffTriggerHash);
+        public void TriggerInjured() => _animator.SetTrigger(injuredTriggerHash);
+        public void TriggerIdlePoisoned() => _animator.SetTrigger(idlePoisonedTriggerHash);
 
         /// <summary>
         /// Kiểm tra animation hiện tại đã kết thúc chưa (cho animation một lần như death, attack...)
         /// </summary>
         public bool IsAnimationFinished()
         {
-            var stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-            return stateInfo.normalizedTime >= 1f && !animator.IsInTransition(0);
+            var stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+            return stateInfo.normalizedTime >= 1f && !_animator.IsInTransition(0);
         }
     }
 }

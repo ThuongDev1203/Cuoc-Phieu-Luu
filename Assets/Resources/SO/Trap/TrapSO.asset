@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 347a675fe62058b439ee77306eb118c0, type: 3}
   m_Name: TrapSO
   m_EditorClassIdentifier: 
-  data:
+  _data:
     trapName: 
-    damage: 10
+    damage: 5

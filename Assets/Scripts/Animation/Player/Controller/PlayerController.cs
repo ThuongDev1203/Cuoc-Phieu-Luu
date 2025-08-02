@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Animation.Player.States;
 using Manager;
+using Other.Dep;
 
 namespace Animation.Player.Controller
 {
@@ -12,45 +13,56 @@ namespace Animation.Player.Controller
     public class PlayerController : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField] private PlayerAnimatorController anim;
-        [SerializeField] private Rigidbody2D rb;
-        [SerializeField] private Transform spriteTransform;
+        [SerializeField] private PlayerAnimatorController _anim;
+        [SerializeField] private Rigidbody2D _rb;
+        [SerializeField] private Transform _spriteTransform;
 
         [Header("Config")]
-        [SerializeField] private PlayerSO playerSO;
+        [SerializeField] private PlayerSO _playerSO;
 
         [Header("Raycast check ground")]
-        [SerializeField] private Transform groundCheck;
-        [SerializeField] private LayerMask groundLayer;
-        [SerializeField] private float groundCheckRadius = 0.2f;
+        [SerializeField] private Transform _groundCheck;
+        [SerializeField] private LayerMask _groundLayer;
+        [SerializeField] private float _groundCheckRadius = 0.2f;
+
+        [Header("Dep")]
+        [SerializeField] private GameObject _depPrefab;
+        [SerializeField] private Transform _depSpawnPoint;
 
 
-        public Rigidbody2D Rigidbody => rb;
-        private bool jumpPressed;
-        public bool JumpPressed => jumpPressed;
+        public Rigidbody2D Rigidbody => _rb;
+        private bool _jumpPressed;
+        public bool JumpPressed => _jumpPressed;
 
-        private FloatingJoystick joystick;
-        private PlayerState currentState;
-        private float moveDirection;
-        private int jumpCount = 0;
-        private int maxJumpCount = 1;
-        private bool wasGroundedLastFrame;
+        //flip
+        private bool _facingRight = true;
+
+        private FloatingJoystick _joystick;
+        private PlayerState _currentState;
+        private float _moveDirection;
+        private int _jumpCount = 0;
+        private int _maxJumpCount = 1;
+        private bool _wasGroundedLastFrame;
 
         //Cool down attack
-        private float attackCooldown = 0.5f;
-        private float lastAttackTime = 0f;
+        private float _attackCooldown = 0.5f;
+        private float _lastAttackTime = 0f;
+
+        private float _attack2Cooldown = 5f;
+        private float _lastAttack2Time = 0f;
+
 
         private void Awake()
         {
-            joystick = GameManager.Instance.Joystick;
+            _joystick = GameManager.Instance.Joystick;
         }
 
         private void Start()
         {
-            if (playerSO != null)
+            if (_playerSO != null)
             {
-                playerSO.LoadData();
-                maxJumpCount = playerSO.Data.maxJumpCount;
+                _playerSO.LoadData();
+                _maxJumpCount = _playerSO.Data.MaxJumpCount;
             }
             ChangeState(new IdleState(this));
         }
@@ -58,14 +70,14 @@ namespace Animation.Player.Controller
         private void Update()
         {
             HandleInput();
-            currentState?.Update();
-            anim.UpdateMovement(moveDirection * playerSO.Data.speed, IsGrounded, rb.velocity.y); // fix chạm ground của attack
+            _currentState?.Update();
+            _anim.UpdateMovement(_moveDirection * _playerSO.Data.Speed, IsGrounded, _rb.velocity.y); // fix chạm ground của attack
 
-            if (IsGrounded && !wasGroundedLastFrame)
+            if (IsGrounded && !_wasGroundedLastFrame)
             {
                 ResetJumpCount();
             }
-            wasGroundedLastFrame = IsGrounded;
+            _wasGroundedLastFrame = IsGrounded;
         }
 
         private void FixedUpdate()
@@ -75,17 +87,17 @@ namespace Animation.Player.Controller
 
         private void HandleInput()
         {
-            moveDirection = joystick.Horizontal;
+            _moveDirection = _joystick.Horizontal;
 
-            if (Mathf.Abs(moveDirection) > 0.1f)
+            if (Mathf.Abs(_moveDirection) > 0.1f)
             {
-                FlipCharacter(moveDirection);
+                FlipCharacter(_moveDirection);
             }
         }
 
         public void MoveHorizontal()
         {
-            rb.velocity = new Vector2(moveDirection * playerSO.Data.speed, rb.velocity.y);
+            _rb.velocity = new Vector2(_moveDirection * _playerSO.Data.Speed, _rb.velocity.y);
         }
 
         public void Jump()
@@ -98,62 +110,97 @@ namespace Animation.Player.Controller
 
         private void PerformJump()
         {
-            rb.velocity = new Vector2(rb.velocity.x, JumpForce);
-            jumpCount++;
+            _rb.velocity = new Vector2(_rb.velocity.x, JumpForce);
+            _jumpCount++;
             ChangeState(new InAirState(this));
         }
 
         private bool CanJump()
         {
-            return jumpCount < maxJumpCount;
+            return _jumpCount < _maxJumpCount;
         }
 
         private void ResetJumpCount()
         {
-            jumpCount = 0;
+            _jumpCount = 0;
         }
 
         private void FlipCharacter(float direction)
         {
-            spriteTransform.localScale = new Vector3(direction > 0 ? 1 : -1, 1, 1);
+            bool shouldFaceRight = direction > 0;
+
+            if (shouldFaceRight != _facingRight)
+            {
+                _facingRight = shouldFaceRight;
+                Vector3 theScale = _spriteTransform.localScale;
+                theScale.x *= -1;
+                _spriteTransform.localScale = theScale;
+            }
         }
 
-        public float InputX => moveDirection;
-        public bool IsGrounded => Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
-        public PlayerAnimatorController Anim => anim;
-        public string PlayerName => playerSO.Data.playerName;
-        public float Speed => playerSO.Data.speed;
-        public float JumpForce => playerSO.Data.jumpForce;
+        // private void FlipCharacter(float direction)
+        // {
+        //     _spriteTransform.localScale = new Vector3(direction > 0 ? 1 : -1, 1, 1);
+        // }
+
+        public float InputX => _moveDirection;
+        public bool IsGrounded => Physics2D.OverlapCircle(_groundCheck.position, _groundCheckRadius, _groundLayer);
+
+        public PlayerAnimatorController Anim => _anim;
+        public string PlayerName => _playerSO.Data.PlayerName;
+        public float Speed => _playerSO.Data.Speed;
+        public float JumpForce => _playerSO.Data.JumpForce;
 
         public void ChangeState(PlayerState newState)
         {
-            currentState?.Exit();
-            currentState = newState;
-            currentState?.Enter();
+            _currentState?.Exit();
+            _currentState = newState;
+            _currentState?.Enter();
         }
 
-        public void SetJumpPressed() => jumpPressed = true;
-        public void ResetJumpPressed() => jumpPressed = false;
+        public void SetJumpPressed() => _jumpPressed = true;
+        public void ResetJumpPressed() => _jumpPressed = false;
 
         // Gọi từ input system hoặc button để test animation
         // public void TriggerAttack1() => ChangeState(new Attack1State(this));
         // public void TriggerAttack2() => ChangeState(new Attack2State(this));
         public void TriggerAttack1()
         {
-            if (Time.time - lastAttackTime < attackCooldown) return;
-            lastAttackTime = Time.time;
-            //if (!(currentState is Attack1State))
+            if (Time.time - _lastAttackTime < _attackCooldown) return;
+            _lastAttackTime = Time.time;
+            //if (!(_currentState is Attack1State))
             ChangeState(new Attack1State(this));
         }
 
         public void TriggerAttack2()
         {
-            if (Time.time - lastAttackTime < attackCooldown) return;
-            lastAttackTime = Time.time;
-            //if (!(currentState is Attack2State))
+            if (Time.time - _lastAttack2Time < _attack2Cooldown) return;
+            _lastAttack2Time = Time.time;
             ChangeState(new Attack2State(this));
         }
+        public void ThrowDep()
+        {
+            if (_depPrefab && _depSpawnPoint)
+            {
+                GameObject dep = Instantiate(_depPrefab, _depSpawnPoint.position, Quaternion.identity);
+                Vector2 direction = _facingRight ? Vector2.right : Vector2.left;
+                dep.GetComponent<DepBullet>().SetDirection(direction);
+            }
+            else
+            {
+                Debug.LogWarning("Chưa gán depPrefab hoặc depSpawnPoint!");
+            }
+        }
+
+
+        // public void TriggerAttack2()
+        // {
+        //     if (Time.time - _lastAttackTime < _attackCooldown) return;
+        //     _lastAttackTime = Time.time;
+        //     //if (!(_currentState is Attack2State))
+        //     ChangeState(new Attack2State(this));
+        // }
 
 
 
