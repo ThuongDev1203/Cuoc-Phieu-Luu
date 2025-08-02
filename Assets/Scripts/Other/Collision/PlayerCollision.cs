@@ -1,10 +1,13 @@
 using UnityEngine;
+using Animation.Player.Controller;
 
 namespace Other.Collision
 {
     public class PlayerCollision : MonoBehaviour
     {
         [SerializeField] private PlayerSO playerSO;
+        [SerializeField] private PlayerAnimatorController _animatorController;
+
         private int _currentHealth;
 
         private void Start()
@@ -28,8 +31,11 @@ namespace Other.Collision
 
             if (_currentHealth <= 0)
             {
+                if (_animatorController != null)
+                {
+                    _animatorController.TriggerDeath();
+                }
                 Debug.Log("Player chết.");
-                // Xử lý chết nếu cần
             }
         }
     }

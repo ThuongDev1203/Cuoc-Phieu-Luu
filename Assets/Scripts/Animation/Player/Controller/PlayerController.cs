@@ -29,6 +29,15 @@ namespace Animation.Player.Controller
         [SerializeField] private GameObject _depPrefab;
         [SerializeField] private Transform _depSpawnPoint;
 
+        //public
+        public float InputX => _moveDirection;
+        public bool IsGrounded => Physics2D.OverlapCircle(_groundCheck.position, _groundCheckRadius, _groundLayer);
+
+        public PlayerAnimatorController Anim => _anim;
+        public string PlayerName => _playerSO.Data.PlayerName;
+        public float Speed => _playerSO.Data.Speed;
+        public float JumpForce => _playerSO.Data.JumpForce;
+
 
         public Rigidbody2D Rigidbody => _rb;
         private bool _jumpPressed;
@@ -144,13 +153,6 @@ namespace Animation.Player.Controller
         //     _spriteTransform.localScale = new Vector3(direction > 0 ? 1 : -1, 1, 1);
         // }
 
-        public float InputX => _moveDirection;
-        public bool IsGrounded => Physics2D.OverlapCircle(_groundCheck.position, _groundCheckRadius, _groundLayer);
-
-        public PlayerAnimatorController Anim => _anim;
-        public string PlayerName => _playerSO.Data.PlayerName;
-        public float Speed => _playerSO.Data.Speed;
-        public float JumpForce => _playerSO.Data.JumpForce;
 
         public void ChangeState(PlayerState newState)
         {
