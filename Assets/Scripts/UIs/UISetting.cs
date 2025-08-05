@@ -55,12 +55,5 @@ namespace UIs
             Debug.Log("Music volume: " + value);
             // AudioManager.Instance.SetMusicVolume(value);
         }
-
-        private void OnMusicToggle(bool isOn)
-        {
-            // Xử lý bật/tắt nhạc nền
-            Debug.Log("Music: " + (isOn ? "On" : "Off"));
-            // AudioManager.Instance.SetMusic(isOn);
-        }
     }
 }

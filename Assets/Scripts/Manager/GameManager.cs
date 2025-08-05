@@ -38,7 +38,7 @@ namespace Manager
 
         public int GetCurrentLevel()
         {
-            return PlayerPrefs.GetInt("CurrentLevel", 1);
+            return PlayerPrefs.GetInt("CurrentLevel", 0);
         }
 
         public void SaveCurrentLevel(int currentLevel)
