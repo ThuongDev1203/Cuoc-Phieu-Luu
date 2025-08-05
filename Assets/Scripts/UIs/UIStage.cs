@@ -1,5 +1,6 @@
 using UnityEngine;
 using Manager;
+using UnityEngine.UI;
 
 namespace UIs
 {
@@ -13,6 +14,9 @@ namespace UIs
 
         [Header("Tổng số level")]
         public int totalLevels = 15;
+
+        [Header("Element UI")]
+        public Button closeButton;
 
         private void Start()
         {
@@ -29,6 +33,9 @@ namespace UIs
 
                 item.Setup(i, starCount, isUnlocked, isCurrent);
             }
+
+            if (closeButton != null)
+                closeButton.onClick.AddListener(Hide);
         }
 
         /// <summary>

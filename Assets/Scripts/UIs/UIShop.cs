@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UIs
 {
@@ -9,6 +10,14 @@ namespace UIs
     /// </summary>
     public class UIShop : UIPanel
     {
+        [Header("Element UI")]
+        public Button closeButton;
+
+        void Start()
+        {
+            if (closeButton != null)
+                closeButton.onClick.AddListener(Hide);
+        }
         /// <summary>
         /// Show UI Game when entering the game.
         /// </summary>
