@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Manager;
+using UIs;
 
 public class UIStageItem : MonoBehaviour
 {
@@ -48,7 +50,14 @@ public class UIStageItem : MonoBehaviour
     private void OnClick()
     {
         Debug.Log($"Click level {level}");
-        //GameManager.Instance.SaveCurrentLevel(level);
-        //GameManager.Instance.LoadGame();
+
+        GameManager.Instance.SaveCurrentLevel(level);
+
+        // Ẩn UI chọn level trước khi vào game
+        GameManager.Instance.uiManager.ShowPanel(GameManager.Instance.uiManager.uiGame);
+
+        // Load game
+        GameManager.Instance.LoadGame();
     }
+
 }

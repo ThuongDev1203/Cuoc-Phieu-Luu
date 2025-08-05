@@ -1382,8 +1382,8 @@ RectTransform:
   - {fileID: 315749073}
   - {fileID: 658653644}
   - {fileID: 429969899099116758}
-  - {fileID: 6518325665494893273}
   - {fileID: 1194868428452726581}
+  - {fileID: 6518325665494893273}
   - {fileID: 5689517518485359421}
   - {fileID: 8188872346753643351}
   - {fileID: 248208306975063757}
@@ -147281,10 +147281,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 1255644263}
-  closeButton: {fileID: 6049879662977095613}
   stageItemPrefab: {fileID: 8611228517914143840, guid: 0235677118c873143b1b4b60e8f17b3e, type: 3}
-  stageListParent: {fileID: 5029646113749166809}
-  maxLevel: 15
+  container: {fileID: 5029646113749166809}
+  totalLevels: 15
 --- !u!114 &1024750847168373473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147601,7 +147600,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1194868427654069462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148146,7 +148145,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 43361648}
-  restartButton: {fileID: 1194868428985217668}
+  settingButton: {fileID: 1194868427929945906}
+  continueButton: {fileID: 1194868428985217668}
+  restartButton: {fileID: 1194868427305511638}
+  giveUpButton: {fileID: 1194868427978123347}
 --- !u!114 &1194868428583897900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148167,7 +148169,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ReStart
+  m_text: Continue
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 50c12c23294124aa48490c44ac65a9e4, type: 2}
   m_sharedMaterial: {fileID: 7746803525459343344, guid: 50c12c23294124aa48490c44ac65a9e4, type: 2}
@@ -209428,8 +209430,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.1, y: 5.5000916}
-  m_SizeDelta: {x: 252.96558, y: 65.000015}
+  m_AnchoredPosition: {x: 0.0000060796738, y: 0}
+  m_SizeDelta: {x: 1000, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5643447633171343260
 MonoBehaviour:
@@ -209562,8 +209564,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 4.5, y: 2.9999695}
-  m_SizeDelta: {x: -33, y: -12}
+  m_AnchoredPosition: {x: 4.5, y: 0}
+  m_SizeDelta: {x: -33, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5643447633392167386
 MonoBehaviour:

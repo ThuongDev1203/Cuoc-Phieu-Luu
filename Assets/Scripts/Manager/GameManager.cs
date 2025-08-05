@@ -38,30 +38,18 @@ namespace Manager
 
         public int GetCurrentLevel()
         {
-            return PlayerPrefs.GetInt("CurrentLevel", 0);
+            return PlayerPrefs.GetInt("CurrentLevel", 1); // default level 1
         }
 
-        public void SaveCurrentLevel(int currentLevel)
+        public void SaveCurrentLevel(int level)
         {
-            PlayerPrefs.SetInt("CurrentLevel", currentLevel);
-        }
-
-        public int GetCurrentHardLevel()
-        {
-            return PlayerPrefs.GetInt("PlayerHardLevel", 1);
+            PlayerPrefs.SetInt("CurrentLevel", level);
         }
 
         public void LoadGame()
         {
             int currentLevel = GetCurrentLevel();
-
-            if (currentLevel < 0 || currentLevel >= levelManager.levelNames.Count)
-            {
-                Debug.LogWarning($"CurrentLevel {currentLevel} vượt giới hạn! Reset về 0.");
-                currentLevel = 0;
-            }
-
-            levelManager.LoadLevel(currentLevel);
+            levelManager.LoadLevel(currentLevel - 1); // vì index bắt đầu từ 0
         }
 
 

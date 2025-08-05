@@ -1,6 +1,7 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using System.Collections;
 using System.Collections.Generic;
+using Other;
 
 namespace Manager
 {
@@ -13,6 +14,7 @@ namespace Manager
         public Transform levelParent;
 
         private GameObject currentLevelInstance;
+        private int currentLevelIndex;
 
         public void LoadLevel(int index)
         {
@@ -21,6 +23,8 @@ namespace Manager
                 Debug.LogError("Level index không hợp lệ!");
                 return;
             }
+
+            currentLevelIndex = index;
 
             // Xoá level cũ
             if (currentLevelInstance != null)
@@ -35,10 +39,49 @@ namespace Manager
             if (prefab != null)
             {
                 currentLevelInstance = Instantiate(prefab, levelParent);
+                StartCoroutine(AssignCameraToPlayer());
             }
             else
             {
                 Debug.LogError("Không tìm thấy prefab tại: " + levelPath);
+            }
+        }
+
+        public void ReloadCurrentLevel()
+        {
+            LoadLevel(currentLevelIndex);
+        }
+
+        public int GetCurrentLevelIndex()
+        {
+            return currentLevelIndex;
+        }
+
+        public void UnloadCurrentLevel()
+        {
+            if (currentLevelInstance != null)
+            {
+                Destroy(currentLevelInstance);
+                currentLevelInstance = null;
+            }
+        }
+
+        private IEnumerator AssignCameraToPlayer()
+        {
+            yield return new WaitForSeconds(0.05f); // đợi Player Awake
+
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null)
+            {
+                CameraFollow camFollow = Camera.main.GetComponent<CameraFollow>();
+                if (camFollow != null)
+                {
+                    camFollow.SetTarget(player.transform);
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Không tìm thấy player để gán cho camera.");
             }
         }
     }

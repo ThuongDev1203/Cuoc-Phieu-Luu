@@ -4,6 +4,7 @@ using UnityEngine;
 using Animation.Player.States;
 using Manager;
 using Other.Dep;
+using Other;
 
 namespace Animation.Player.Controller
 {
@@ -68,6 +69,14 @@ namespace Animation.Player.Controller
 
         private void Start()
         {
+            //Camera
+            CameraFollow camFollow = Camera.main.GetComponent<CameraFollow>();
+            if (camFollow != null)
+            {
+                camFollow.SetTarget(transform);
+            }
+
+            //Load Data
             if (_playerSO != null)
             {
                 _playerSO.LoadData();

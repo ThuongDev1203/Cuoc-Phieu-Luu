@@ -48,5 +48,10 @@ namespace Other
             Vector3 targetPosition = _target.position + _offset;
             transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref _velocity, _smoothTime);
         }
+
+        public void SetTarget(Transform target)
+        {
+            _target = target;
+        }
     }
 }

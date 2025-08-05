@@ -1,31 +1,38 @@
-using System.Collections;
-using System.Collections.Generic;
-using Manager;
 using UnityEngine;
-using UnityEngine.UI;
+using Manager;
 
 namespace UIs
 {
-    /// <summary>
-    /// UIStage class for managing stage UI elements
-    /// </summary>
     public class UIStage : UIPanel
     {
-        [Header("Element UI")]
-        public Button closeButton;
+        [Header("Prefab UIStageItem")]
         public GameObject stageItemPrefab;
-        public Transform stageListParent;
-        public int maxLevel = 15;
 
-        void Start()
+        [Header("Container để chứa item")]
+        public Transform container;
+
+        [Header("Tổng số level")]
+        public int totalLevels = 15;
+
+        private void Start()
         {
-            GenerateStageList();
+            int currentLevel = GameManager.Instance.GetCurrentLevel();
 
-            if (closeButton != null)
-                closeButton.onClick.AddListener(Hide);
+            for (int i = 1; i <= totalLevels; i++)
+            {
+                GameObject go = Instantiate(stageItemPrefab, container);
+                UIStageItem item = go.GetComponent<UIStageItem>();
+
+                int starCount = PlayerPrefs.GetInt($"Level_{i}_Star", 0);
+                bool isUnlocked = i <= currentLevel;
+                bool isCurrent = i == currentLevel;
+
+                item.Setup(i, starCount, isUnlocked, isCurrent);
+            }
         }
+
         /// <summary>
-        /// Show Stage UI when entering the stage.
+        /// Show UI Game when entering the game.
         /// </summary>
         public override void Show()
         {
@@ -33,29 +40,11 @@ namespace UIs
         }
 
         /// <summary>
-        /// Hide Stage UI when switching to another screen.
+        /// Hide UI Game when switching to another screen.
         /// </summary>
         public override void Hide()
         {
             base.Hide();
-        }
-
-        void GenerateStageList()
-        {
-            int currentLevel = GameManager.Instance.GetCurrentLevel();
-
-            for (int i = 1; i <= maxLevel; i++)
-            {
-                GameObject item = Instantiate(stageItemPrefab, stageListParent);
-                var stageItem = item.GetComponent<UIStageItem>();
-
-                bool isUnlocked = i <= currentLevel;
-                bool isCurrent = i == currentLevel;
-
-                int star = PlayerPrefs.GetInt($"Level_{i}_Star", 0);
-
-                stageItem.Setup(i, star, isUnlocked, isCurrent);
-            }
         }
     }
 }
