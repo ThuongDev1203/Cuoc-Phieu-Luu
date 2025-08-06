@@ -7,9 +7,6 @@ namespace Other.Dep
 {
     public class DepBullet : MonoBehaviour
     {
-        [SerializeField] private float _speed = 10f;
-        [SerializeField] private float _lifetime = 5f;
-
         [Header("DepSO")]
         [SerializeField] private DepSO depSO;
 
@@ -17,19 +14,21 @@ namespace Other.Dep
 
         void Start()
         {
-            Destroy(gameObject, _lifetime);
+            // Tự hủy sau thời gian tồn tại
+            Destroy(gameObject, depSO.Data.DepLifetime);
         }
 
         void Update()
         {
-            transform.Translate(_direction * _speed * Time.deltaTime, Space.World);
+            // Di chuyển theo hướng
+            transform.Translate(_direction * depSO.Data.DepSpeed * Time.deltaTime, Space.World);
         }
 
         public void SetDirection(Vector2 direction)
         {
             _direction = direction.normalized;
 
-            // Xoay theo hướng mới mỗi khi được SetDirection
+            // Xoay theo hướng bay
             float angle = Mathf.Atan2(_direction.y, _direction.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
