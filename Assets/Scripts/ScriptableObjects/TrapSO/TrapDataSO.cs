@@ -7,9 +7,9 @@ namespace ScriptableObjects.TrapSO
     public class TrapDataSO
     {
         [SerializeField] private string trapName;
-        [SerializeField] private float damage;
+        [SerializeField] private int damage;
 
         public string TrapName => trapName;
-        public float Damage => damage;
+        public int Damage => damage;
     }
 }

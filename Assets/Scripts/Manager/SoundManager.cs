@@ -1,0 +1,139 @@
+using System.Collections;
+using UnityEngine;
+
+namespace Manager
+{
+    public class SoundManager : MonoBehaviour
+    {
+        public static SoundManager Instance;
+
+        [Header("Sound Clip")]
+        public AudioClip backgroundMusic; // Nhạc nền mặc định
+        public AudioClip clickButton;     // Âm click nút
+
+        private AudioSource musicSource;
+        private AudioSource sfxSource;
+
+        // Key để lưu âm lượng vào PlayerPrefs
+        private const string MUSIC_VOLUME_KEY = "music_volume";
+        private const string SOUND_VOLUME_KEY = "sound_volume";
+
+        private void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+                InitAudioSources(); // Tạo và cấu hình AudioSource
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
+
+        private void Start()
+        {
+            // Load âm lượng đã lưu
+            SetMusicVolume(GetMusicVolume());
+            SetSoundVolume(GetSoundVolume());
+
+            // Bắt đầu phát nhạc nền mặc định
+            PlayBackgroundMusic();
+        }
+
+        /// <summary>
+        /// Tạo và cấu hình AudioSources cho nhạc nền và hiệu ứng
+        /// </summary>
+        private void InitAudioSources()
+        {
+            // Music Source
+            musicSource = gameObject.AddComponent<AudioSource>();
+            musicSource.loop = true;
+            musicSource.playOnAwake = false;
+
+            // SFX Source
+            sfxSource = gameObject.AddComponent<AudioSource>();
+            sfxSource.playOnAwake = false;
+        }
+
+        /// <summary>
+        /// Phát nhạc nền mặc định
+        /// </summary>
+        public void PlayBackgroundMusic()
+        {
+            if (backgroundMusic == null) return;
+
+            musicSource.clip = backgroundMusic;
+            musicSource.Play();
+        }
+
+        /// <summary>
+        /// Đổi nhạc nền
+        /// </summary>
+        public void ChangeBackgroundMusic(AudioClip newClip)
+        {
+            if (newClip == null) return;
+
+            musicSource.Stop();
+            musicSource.clip = newClip;
+            musicSource.Play();
+        }
+
+        /// <summary>
+        /// Trở về nhạc nền mặc định
+        /// </summary>
+        public void RestoreDefaultMusic()
+        {
+            ChangeBackgroundMusic(backgroundMusic);
+        }
+
+        /// <summary>
+        /// Phát âm thanh hiệu ứng
+        /// </summary>
+        public void PlayClickSound()
+        {
+            if (clickButton == null) return;
+
+            sfxSource.PlayOneShot(clickButton);
+        }
+
+        // -----------------------------
+        // Xử lý âm lượng + lưu vào PlayerPrefs
+        // -----------------------------
+
+        /// <summary>
+        /// Lấy âm lượng nhạc nền từ PlayerPrefs
+        /// </summary>
+        public float GetMusicVolume()
+        {
+            return PlayerPrefs.GetFloat(MUSIC_VOLUME_KEY, 1f); // Mặc định 100%
+        }
+
+        /// <summary>
+        /// Lấy âm lượng hiệu ứng từ PlayerPrefs
+        /// </summary>
+        public float GetSoundVolume()
+        {
+            return PlayerPrefs.GetFloat(SOUND_VOLUME_KEY, 1f); // Mặc định 100%
+        }
+
+        /// <summary>
+        /// Cập nhật và lưu âm lượng nhạc nền
+        /// </summary>
+        public void SetMusicVolume(float volume)
+        {
+            musicSource.volume = volume;
+            PlayerPrefs.SetFloat(MUSIC_VOLUME_KEY, volume);
+        }
+
+        /// <summary>
+        /// Cập nhật và lưu âm lượng hiệu ứng
+        /// </summary>
+        public void SetSoundVolume(float volume)
+        {
+            sfxSource.volume = volume;
+            PlayerPrefs.SetFloat(SOUND_VOLUME_KEY, volume);
+        }
+    }
+}

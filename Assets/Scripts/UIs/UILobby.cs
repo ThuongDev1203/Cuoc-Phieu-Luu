@@ -41,6 +41,7 @@ namespace UIs
 
         private void OnButtonEffect(Button btn)
         {
+            SoundManager.Instance.PlayClickSound();
             // Pop scale animation on click
             btn.transform.DOKill(); // Stop previous tweens if any
             btn.transform.localScale = Vector3.one;

@@ -1,13 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Manager;
 
 namespace UIs
 {
-    /// <summary>
-    /// UISetting class for managing settings UI elements
-    /// </summary>
     public class UISetting : UIDialog
     {
         [Header("Settings UI")]
@@ -27,33 +23,34 @@ namespace UIs
                 closeButton.onClick.AddListener(Hide);
         }
 
-        /// <summary>
-        /// Update UI when opening Setting
-        /// </summary>
         public override void Show()
         {
             Debug.Log("Đang mở UI Setting");
             base.Show();
+
+            // Load volume từ SoundManager
+            if (soundSlider != null)
+                soundSlider.value = SoundManager.Instance.GetSoundVolume();
+
+            if (musicSlider != null)
+                musicSlider.value = SoundManager.Instance.GetMusicVolume();
         }
 
         public override void Hide()
         {
             base.Hide();
-            // Save settings if needed
         }
 
         private void OnSoundSlider(float value)
         {
-            // Xử lý điều chỉnh âm lượng sound
             Debug.Log("Sound volume: " + value);
-            // AudioManager.Instance.SetSoundVolume(value);
+            SoundManager.Instance.SetSoundVolume(value);
         }
 
         private void OnMusicSlider(float value)
         {
-            // Xử lý điều chỉnh âm lượng nhạc nền
             Debug.Log("Music volume: " + value);
-            // AudioManager.Instance.SetMusicVolume(value);
+            SoundManager.Instance.SetMusicVolume(value);
         }
     }
 }

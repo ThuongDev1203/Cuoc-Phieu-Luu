@@ -52,12 +52,14 @@ namespace UIs
 
         private void OpenSetting()
         {
+            SoundManager.Instance.PlayClickSound();
             this.Hide();
             GameManager.Instance.uiManager.uiSetting.Show();
         }
 
         private void RestartLevel()
         {
+            SoundManager.Instance.PlayClickSound();
             Hide(); // Ẩn UI Pause
             Time.timeScale = 1f;
             GameManager.Instance.levelManager.ReloadCurrentLevel();
@@ -65,6 +67,7 @@ namespace UIs
 
         private void ReturnToLobby()
         {
+            SoundManager.Instance.PlayClickSound();
             Time.timeScale = 1f;
 
             // Ẩn các UI đang mở
@@ -77,6 +80,10 @@ namespace UIs
 
             // Xóa level hiện tại
             GameManager.Instance.levelManager.UnloadCurrentLevel();
+
+            // Trở lại nhạc nền mặc định
+            SoundManager.Instance.RestoreDefaultMusic();
         }
+
     }
 }

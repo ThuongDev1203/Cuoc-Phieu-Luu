@@ -40,12 +40,25 @@ namespace Manager
             {
                 currentLevelInstance = Instantiate(prefab, levelParent);
                 StartCoroutine(AssignCameraToPlayer());
+
+                //Load nhạc nền tương ứng từ Resources/Audio/Level
+                string musicPath = $"Audio/Level{index + 1}";
+                AudioClip levelMusic = Resources.Load<AudioClip>(musicPath);
+                if (levelMusic != null)
+                {
+                    SoundManager.Instance.ChangeBackgroundMusic(levelMusic);
+                }
+                else
+                {
+                    Debug.LogWarning("Không tìm thấy nhạc nền: " + musicPath);
+                }
             }
             else
             {
                 Debug.LogError("Không tìm thấy prefab tại: " + levelPath);
             }
         }
+
 
         public void ReloadCurrentLevel()
         {
