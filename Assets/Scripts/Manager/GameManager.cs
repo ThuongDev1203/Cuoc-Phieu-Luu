@@ -17,6 +17,8 @@ namespace Manager
         public UIManager uiManager;
         public LevelManager levelManager;
         public FloatingJoystick Joystick => uiManager.uiGame.joystick;
+        public CoinManager coinManager;
+        public DiamondManager diamondManager;
 
         private void Awake()
         {
@@ -29,6 +31,12 @@ namespace Manager
             }
             Instance = this;
             DontDestroyOnLoad(gameObject);
+
+            if (coinManager == null)
+                coinManager = gameObject.AddComponent<CoinManager>();
+
+            if (diamondManager == null)
+                diamondManager = gameObject.AddComponent<DiamondManager>();
         }
 
         private void Start()
@@ -52,6 +60,14 @@ namespace Manager
             levelManager.LoadLevel(currentLevel - 1); // vì index bắt đầu từ 0
         }
 
+        public void UpdateCoinUI(int coin)
+        {
+            uiManager.uiGame.SetCoinText(coin); // gọi trực tiếp
+        }
 
+        public void UpdateDiamondUI(int diamond)
+        {
+            uiManager.uiGame.SetDiamondText(diamond); // gọi trực tiếp
+        }
     }
 }

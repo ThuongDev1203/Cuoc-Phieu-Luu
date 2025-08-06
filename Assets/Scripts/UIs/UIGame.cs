@@ -28,7 +28,9 @@ namespace UIs
         [SerializeField] private Image attack2CooldownTile;
         [SerializeField] private TMP_Text attack2CooldownText;
 
-
+        [Header("Value UI")]
+        [SerializeField] private TMP_Text coinText;
+        [SerializeField] private TMP_Text diamondText;
 
         void Start()
         {
@@ -157,23 +159,17 @@ namespace UIs
             }
         }
 
+        public void SetCoinText(int coin)
+        {
+            if (coinText != null)
+                coinText.text = coin.ToString();
+        }
 
-        // private void OnAttack2()
-        // {
-        //     if (playerController == null)
-        //     {
-        //         playerController = FindObjectOfType<PlayerController>();
-        //     }
-
-        //     if (playerController != null)
-        //     {
-        //         playerController.TriggerAttack2();
-        //     }
-        //     else
-        //     {
-        //         Debug.LogWarning("PlayerController still not found!");
-        //     }
-        // }
+        public void SetDiamondText(int diamond)
+        {
+            if (diamondText != null)
+                diamondText.text = diamond.ToString();
+        }
 
     }
 }

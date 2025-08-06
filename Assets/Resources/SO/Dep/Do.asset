@@ -13,5 +13,9 @@ MonoBehaviour:
   m_Name: Do
   m_EditorClassIdentifier: 
   _data:
-    _depName: 
+    _depName: Do
     _depDamage: 0
+    _depSpeed: 0
+    _depLifetime: 0
+    _depType: 0
+    _depPrefab: {fileID: 3476573420479507835, guid: 05a07a19bcfb4e9488f71fcf4a1fad78, type: 3}

@@ -18,4 +18,4 @@ MonoBehaviour:
     _depSpeed: 0
     _depLifetime: 0
     _depType: 4
-    _depPrefab: {fileID: 0}
+    _depPrefab: {fileID: 3476573420479507835, guid: 5ed2608a05e9ce1499fd566891230819, type: 3}
