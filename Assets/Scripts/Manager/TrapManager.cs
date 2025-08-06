@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Animation.Player.Controller;
 using Animation.Player.States;
 using UnityEngine;
+using Other.Collision;
 
 namespace Manager
 {
@@ -49,12 +50,21 @@ namespace Manager
 
         IEnumerator HitLoop(PlayerController player)
         {
+            var playerCollision = player.GetComponent<PlayerCollision>();
+
             while (isPlayerInTrap)
             {
                 player.ChangeState(new HitState(player));
+
+                if (playerCollision != null && trapSO.Data != null)
+                {
+                    playerCollision.TakeDamage((int)trapSO.Data.Damage);
+                }
+
                 yield return new WaitForSeconds(_hitInterval);
             }
         }
+
     }
 }
 

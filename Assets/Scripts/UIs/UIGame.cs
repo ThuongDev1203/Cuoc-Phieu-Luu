@@ -31,6 +31,7 @@ namespace UIs
         [Header("Value UI")]
         [SerializeField] private TMP_Text coinText;
         [SerializeField] private TMP_Text diamondText;
+        [SerializeField] private TMP_Text healthText;
 
         void Start()
         {
@@ -171,5 +172,10 @@ namespace UIs
                 diamondText.text = diamond.ToString();
         }
 
+        public void SetHealthText(int health)
+        {
+            if (healthText != null)
+                healthText.text = health.ToString();
+        }
     }
 }

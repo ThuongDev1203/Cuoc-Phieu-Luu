@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: TrapSO
   m_EditorClassIdentifier: 
   _data:
-    trapName: 
-    damage: 5
+    trapName: trap1
+    damage: 2
