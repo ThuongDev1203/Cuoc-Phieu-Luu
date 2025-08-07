@@ -13,6 +13,7 @@ namespace Other
         {
             if (collision.CompareTag("Player"))
             {
+                SoundManager.Instance.PlayCoinColect();
                 GameManager.Instance.diamondManager.AddDiamond(diamondValue);
                 Destroy(gameObject);
             }

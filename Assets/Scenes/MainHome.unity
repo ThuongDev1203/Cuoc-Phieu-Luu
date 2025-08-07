@@ -1347,6 +1347,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backgroundMusic: {fileID: 8300000, guid: 1ac6e898440a8ed4aa379beccbfdcf94, type: 3}
   clickButton: {fileID: 8300000, guid: 9f7c78411d0f5a144920fd698289d00e, type: 3}
+  jumpButton: {fileID: 8300000, guid: 43fb65131c751d44cb24881b1d286c49, type: 3}
+  coinCollect: {fileID: 8300000, guid: eb33f0d045637004a90479e6c892e7bf, type: 3}
 --- !u!1 &694068038
 GameObject:
   m_ObjectHideFlags: 0

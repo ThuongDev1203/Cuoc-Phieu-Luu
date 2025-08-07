@@ -8,8 +8,10 @@ namespace Manager
         public static SoundManager Instance;
 
         [Header("Sound Clip")]
-        public AudioClip backgroundMusic; // Nhạc nền mặc định
-        public AudioClip clickButton;     // Âm click nút
+        public AudioClip backgroundMusic;
+        public AudioClip clickButton;
+        public AudioClip jumpButton;
+        public AudioClip coinCollect;
 
         private AudioSource musicSource;
         private AudioSource sfxSource;
@@ -96,6 +98,21 @@ namespace Manager
             if (clickButton == null) return;
 
             sfxSource.PlayOneShot(clickButton);
+        }
+
+        /// <summary>
+        /// Jump
+        /// </summary>
+        public void PlayJumpSound()
+        {
+            if (jumpButton == null) return;
+            sfxSource.PlayOneShot(jumpButton);
+        }
+
+        public void PlayCoinColect()
+        {
+            if (coinCollect == null) return;
+            sfxSource.PlayOneShot(coinCollect);
         }
 
         // -----------------------------

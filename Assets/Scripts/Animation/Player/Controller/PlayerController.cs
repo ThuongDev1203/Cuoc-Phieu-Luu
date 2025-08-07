@@ -131,6 +131,7 @@ namespace Animation.Player.Controller
             _rb.velocity = new Vector2(_rb.velocity.x, JumpForce);
             _jumpCount++;
             ChangeState(new InAirState(this));
+            SoundManager.Instance.PlayJumpSound();
         }
 
         private bool CanJump()
