@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Animation.Boss.state;
 using UnityEngine;
 
-public class BossStateMachine : MonoBehaviour
+public class BossStateMachine 
 {
      private Dictionary<System.Type, BossState> _states = new Dictionary<System.Type, BossState>();
         public BossState CurrentState { get; private set; }

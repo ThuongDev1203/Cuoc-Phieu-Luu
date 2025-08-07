@@ -34,7 +34,12 @@ namespace Annimation.Boss.Manager
             _runState = new RunBoss5(this, stateMachine);
             stateMachine.AddState(_idleState);
             stateMachine.AddState(_runState);
-            idle(); 
+            if (_animator == null)
+            { 
+                Debug.LogError("Animator component is missing on the Boss5Control GameObject.");
+            }
+           idle();
+
 
         }
         private bool BossCheck()
@@ -94,7 +99,7 @@ namespace Annimation.Boss.Manager
                 }
         }
 
-    public void RunBoss() => stateMachine.ChangeState(_runState);
+    public void RunBoss() => stateMachine.ChangeState(stateMachine.GetState<RunBoss5>());
     public void idle() => stateMachine.ChangeState(_idleState);
 
     }
