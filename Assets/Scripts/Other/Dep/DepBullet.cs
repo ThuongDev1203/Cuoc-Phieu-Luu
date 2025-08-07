@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using ScriptableObjects.DepDataSO;
+using Other.Collision;
 
 namespace Other.Dep
 {
@@ -37,7 +35,23 @@ namespace Other.Dep
         {
             if (collision.CompareTag("Enemy"))
             {
-                Debug.Log($"Hit {collision.name} with {depSO.Data.DepName} dealing {depSO.Data.DepDamage} damage.");
+                EnemyCollision enemy = collision.GetComponent<EnemyCollision>();
+                if (enemy != null)
+                {
+                    enemy.TakeDamage(depSO.Data.DepDamage);
+                }
+
+                Destroy(gameObject);
+            }
+
+            if (collision.CompareTag("Boss"))
+            {
+                var boss = collision.GetComponent<BossController>();
+                if (boss != null)
+                {
+                    boss.TakeDamage(depSO.Data.DepDamage);
+                }
+
                 Destroy(gameObject);
             }
         }

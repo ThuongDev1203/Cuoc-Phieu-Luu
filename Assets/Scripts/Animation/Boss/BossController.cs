@@ -1,5 +1,6 @@
 using UnityEngine;
 using ScriptableObjects.BossSO;
+using System.Collections;
 
 public class BossController : MonoBehaviour
 {
@@ -21,8 +22,9 @@ public class BossController : MonoBehaviour
     private bool isPlayerInChaseRange = false;
     private bool isPlayerInAttackRange = false;
     private bool isFacingRight = false;
+    private bool isInHitState = false;
 
-    private enum State { Idle, Run, Attack, Hit, Dead }
+    private enum State { Idle, Run, Attack, Hit, Death }
     private State currentState = State.Idle;
 
     void Start()
@@ -43,11 +45,11 @@ public class BossController : MonoBehaviour
 
     void Update()
     {
-        if (player == null || currentState == State.Dead) return;
+        if (player == null || currentState == State.Death || isInHitState) return;
 
         if (health <= 0)
         {
-            ChangeState(State.Dead);
+            ChangeState(State.Death);
             return;
         }
 
@@ -83,7 +85,7 @@ public class BossController : MonoBehaviour
                 }
                 break;
             case State.Hit:
-            case State.Dead:
+            case State.Death:
                 rb.velocity = Vector2.zero;
                 break;
         }
@@ -92,8 +94,10 @@ public class BossController : MonoBehaviour
     void ChangeState(State newState)
     {
         if (currentState == newState) return;
-        currentState = newState;
 
+        Debug.Log($"Chuyển trạng thái từ {currentState} → {newState}");
+
+        currentState = newState;
         var animSO = bossData.animationSO;
         if (animSO == null) return;
 
@@ -111,7 +115,7 @@ public class BossController : MonoBehaviour
             case State.Hit:
                 animator.SetTrigger(animSO.hitTrigger);
                 break;
-            case State.Dead:
+            case State.Death:
                 animator.SetTrigger(animSO.deathTrigger);
                 break;
         }
@@ -124,14 +128,43 @@ public class BossController : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if (currentState == State.Dead) return;
+        if (currentState == State.Death) return;
 
         health -= damage;
+        Debug.Log($"Boss nhận {damage} sát thương. Máu còn lại: {health}");
+
         if (health > 0)
-            ChangeState(State.Hit);
+        {
+            StartCoroutine(HitRoutine());
+        }
         else
-            ChangeState(State.Dead);
+        {
+            StopAllCoroutines(); //Dừng tất cả coroutine cũ
+            ChangeState(State.Death);
+            isInHitState = false; // Cho phép Update() thoát hẳn
+            Destroy(gameObject);
+        }
     }
+
+    private IEnumerator HitRoutine()
+    {
+        isInHitState = true;
+        ChangeState(State.Hit);
+
+        yield return new WaitForSeconds(0.3f);
+
+        if (currentState == State.Death) yield break; // Đã Death thì không đổi gì nữa
+
+        if (isPlayerInAttackRange)
+            ChangeState(State.Attack);
+        else if (isPlayerInChaseRange)
+            ChangeState(State.Run);
+        else
+            ChangeState(State.Idle);
+
+        isInHitState = false;
+    }
+
 
     public void SetPlayerInChaseRange(bool inRange)
     {

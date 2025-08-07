@@ -10,14 +10,14 @@ namespace ScriptableObjects.DepDataSO
     public class DepDataSO
     {
         [SerializeField] private string _depName;
-        [SerializeField] private float _depDamage;
+        [SerializeField] private int _depDamage;
         [SerializeField] private float _depSpeed;
         [SerializeField] private float _depLifetime;
         [SerializeField] private DepType _depType;
         [SerializeField] private GameObject _depPrefab;
 
         public string DepName => _depName;
-        public float DepDamage => _depDamage;
+        public int DepDamage => _depDamage;
         public float DepSpeed => _depSpeed;
         public float DepLifetime => _depLifetime;
         public DepType DepType => _depType;
