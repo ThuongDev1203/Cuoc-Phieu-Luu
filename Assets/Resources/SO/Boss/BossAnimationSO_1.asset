@@ -9,13 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff76fd3ea307e0d4a96f19fb016ac612, type: 3}
-  m_Name: Hong
+  m_Script: {fileID: 11500000, guid: d4e6b724ebfec534caaf59cf2376c425, type: 3}
+  m_Name: BossAnimationSO_1
   m_EditorClassIdentifier: 
-  _data:
-    _depName: Hong
-    _depDamage: 10
-    _depSpeed: 10
-    _depLifetime: 3
-    _depType: 1
-    _depPrefab: {fileID: 3476573420479507835, guid: fb24fae3b6e595e418be82adf4ff408a, type: 3}
+  idleTrigger: Idle
+  runTrigger: Run
+  attackTrigger: Attack
+  hitTrigger: Hit
+  deathTrigger: Death
