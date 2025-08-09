@@ -1,5 +1,6 @@
 using UnityEngine;
 using Other.Collision;
+using Unity.VisualScripting;
 
 namespace Other.Dep
 {
@@ -52,6 +53,11 @@ namespace Other.Dep
                     boss.TakeDamage(depSO.Data.DepDamage);
                 }
 
+                Destroy(gameObject);
+            }
+
+            if (collision.CompareTag("Ground"))
+            {
                 Destroy(gameObject);
             }
         }
