@@ -1,6 +1,7 @@
 using UnityEngine;
 using ScriptableObjects.DepDataSO;
 using Other.Collision;
+using Manager;
 
 namespace Other.Dep
 {
@@ -16,6 +17,7 @@ namespace Other.Dep
 
         void Start()
         {
+            SoundManager.Instance.PlayNemDep();
             Destroy(gameObject, depSO.Data.DepLifetime);
         }
 

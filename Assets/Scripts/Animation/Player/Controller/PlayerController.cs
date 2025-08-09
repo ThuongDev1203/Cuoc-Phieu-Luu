@@ -53,6 +53,7 @@ namespace Animation.Player.Controller
         private int _jumpCount = 0;
         private int _maxJumpCount = 1;
         private bool _wasGroundedLastFrame;
+        private bool wasRunningLastFrame = false;
 
         //Cool down attack
         private float _attackCooldown = 0.5f;
@@ -96,6 +97,16 @@ namespace Animation.Player.Controller
                 ResetJumpCount();
             }
             _wasGroundedLastFrame = IsGrounded;
+
+            // Phát âm thanh run
+            bool isRunningNow = IsGrounded && Mathf.Abs(_moveDirection) > 0;
+
+            if (isRunningNow && !wasRunningLastFrame)
+            {
+                SoundManager.Instance.PlayRun();
+            }
+
+            wasRunningLastFrame = isRunningNow;
         }
 
         private void FixedUpdate()

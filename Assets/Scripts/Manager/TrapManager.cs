@@ -28,6 +28,7 @@ namespace Manager
                 PlayerController player = collision.GetComponent<PlayerController>();
                 if (player != null)
                 {
+                    SoundManager.Instance.PlayHitPig();
                     isPlayerInTrap = true;
                     hitCoroutine = StartCoroutine(HitLoop(player));
                 }

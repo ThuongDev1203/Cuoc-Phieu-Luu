@@ -269,7 +269,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelNames:
-  - Level_5
+  - Level_1
   levelParent: {fileID: 2076238175}
 --- !u!1 &168994642
 GameObject:
@@ -1191,7 +1191,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 658653643}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -10500}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1348,7 +1348,11 @@ MonoBehaviour:
   backgroundMusic: {fileID: 8300000, guid: 1ac6e898440a8ed4aa379beccbfdcf94, type: 3}
   clickButton: {fileID: 8300000, guid: 9f7c78411d0f5a144920fd698289d00e, type: 3}
   jumpButton: {fileID: 8300000, guid: 43fb65131c751d44cb24881b1d286c49, type: 3}
+  run: {fileID: 0}
   coinCollect: {fileID: 8300000, guid: eb33f0d045637004a90479e6c892e7bf, type: 3}
+  hitPig: {fileID: 8300000, guid: 7cb6a355fc3e18f47969f1e5e95fb90e, type: 3}
+  trap_falling: {fileID: 8300000, guid: ed698e3d166c8db43a1257f367d6815a, type: 3}
+  nemdep: {fileID: 8300000, guid: 9b8d044d41a8eaa4c985d2c542eca612, type: 3}
 --- !u!1 &694068038
 GameObject:
   m_ObjectHideFlags: 0

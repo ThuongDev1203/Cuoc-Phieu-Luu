@@ -11,7 +11,12 @@ namespace Manager
         public AudioClip backgroundMusic;
         public AudioClip clickButton;
         public AudioClip jumpButton;
+        public AudioClip run;
         public AudioClip coinCollect;
+        public AudioClip hitPig;
+        public AudioClip trap_falling;
+        public AudioClip nemdep;
+
 
         private AudioSource musicSource;
         private AudioSource sfxSource;
@@ -113,6 +118,30 @@ namespace Manager
         {
             if (coinCollect == null) return;
             sfxSource.PlayOneShot(coinCollect);
+        }
+
+        public void PlayRun()
+        {
+            if (run == null) return;
+            sfxSource.PlayOneShot(run);
+        }
+
+        public void PlayHitPig()
+        {
+            if (hitPig == null) return;
+            sfxSource.PlayOneShot(hitPig);
+        }
+
+        public void PlayTrapFlalling()
+        {
+            if (trap_falling == null) return;
+            sfxSource.PlayOneShot(trap_falling);
+        }
+
+        public void PlayNemDep()
+        {
+            if (nemdep == null) return;
+            sfxSource.PlayOneShot(nemdep);
         }
 
         // -----------------------------
