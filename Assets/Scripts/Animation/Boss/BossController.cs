@@ -1,6 +1,8 @@
 using UnityEngine;
 using ScriptableObjects.BossSO;
 using System.Collections;
+using Other.Collision;
+using Animation.Player.Controller;
 
 public class BossController : MonoBehaviour
 {
@@ -15,9 +17,10 @@ public class BossController : MonoBehaviour
     private float chaseRange;
     private float moveSpeed;
     private int health;
+    private bool canAttack = true;
 
     private float lastAttackTime;
-    public float attackCooldown = 1f;
+    private float attackCooldown;
 
     private bool isPlayerInChaseRange = false;
     private bool isPlayerInAttackRange = false;
@@ -38,6 +41,7 @@ public class BossController : MonoBehaviour
             chaseRange = bossData.Data.ChaseRange;
             moveSpeed = bossData.Data.MoveSpeed;
             health = bossData.Data.MaxHealth;
+            attackCooldown = bossData.Data.AttackCooldown;
         }
 
         lastAttackTime = Time.time - attackCooldown;
@@ -78,9 +82,8 @@ public class BossController : MonoBehaviour
                 break;
             case State.Attack:
                 rb.velocity = Vector2.zero;
-                if (Time.time - lastAttackTime > attackCooldown)
+                if (canAttack)
                 {
-                    lastAttackTime = Time.time;
                     Attack();
                 }
                 break;
@@ -123,7 +126,30 @@ public class BossController : MonoBehaviour
 
     void Attack()
     {
+        if (!canAttack) return;
+
+        canAttack = false;
         Debug.Log("Boss tấn công!");
+
+        // Gây damage cho player
+        if (player != null)
+        {
+            var playerCollision = player.GetComponent<PlayerCollision>();
+            if (playerCollision != null)
+            {
+                playerCollision.TakeDamage(bossData.Data.AttackDamage);
+                playerCollision.TriggerHit();
+                Debug.Log($"Boss gây {bossData.Data.AttackDamage} damage cho Player");
+            }
+        }
+
+        StartCoroutine(AttackCooldownRoutine());
+    }
+
+    IEnumerator AttackCooldownRoutine()
+    {
+        yield return new WaitForSeconds(attackCooldown);
+        canAttack = true;
     }
 
     public void TakeDamage(int damage)
@@ -139,10 +165,9 @@ public class BossController : MonoBehaviour
         }
         else
         {
-            StopAllCoroutines(); //Dừng tất cả coroutine cũ
+            StopAllCoroutines(); //Dừng tất cả coroutine cũ (HitRoutine)
             ChangeState(State.Death);
             isInHitState = false; // Cho phép Update() thoát hẳn
-            Destroy(gameObject);
         }
     }
 
@@ -153,7 +178,7 @@ public class BossController : MonoBehaviour
 
         yield return new WaitForSeconds(0.3f);
 
-        if (currentState == State.Death) yield break; // Đã Death thì không đổi gì nữa
+        if (currentState == State.Death) yield break; // Đã chết thì không đổi gì nữa
 
         if (isPlayerInAttackRange)
             ChangeState(State.Attack);
@@ -188,3 +213,6 @@ public class BossController : MonoBehaviour
         }
     }
 }
+
+
+

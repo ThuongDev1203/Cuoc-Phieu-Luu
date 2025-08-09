@@ -75,5 +75,11 @@ namespace Other.Collision
 
             Time.timeScale = 0f;
         }
+
+        public void TriggerHit()
+        {
+            _animatorController.TriggerHit();
+        }
+
     }
 }

@@ -817,7 +817,7 @@ GameObject:
   - component: {fileID: 932074981881295167}
   m_Layer: 0
   m_Name: Sandbug
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27424,7 +27424,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossData: {fileID: 11400000, guid: 9a68a813f3d746e46b43d2b194321b9d, type: 2}
-  attackCooldown: 1
 --- !u!212 &1665792653513266078
 SpriteRenderer:
   m_ObjectHideFlags: 0

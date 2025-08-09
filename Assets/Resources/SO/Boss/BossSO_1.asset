@@ -16,6 +16,8 @@ MonoBehaviour:
     _bossName: Pig Black
     _chaseRange: 20
     _moveSpeed: 6
+    _attackDamage: 5
+    _attackCooldown: 1
     _maxHealth: 100
     _health: 100
   animationSO: {fileID: 11400000, guid: 5ac8bdd5687fab64bba7f6d81c9c831a, type: 2}

@@ -105,13 +105,28 @@ namespace Animation.Player.Controller
 
         private void HandleInput()
         {
-            _moveDirection = _joystick.Horizontal;
+            // Đọc input từ joystick
+            float rawInput = _joystick.Horizontal;
 
-            if (Mathf.Abs(_moveDirection) > 0.1f)
+            // Deadzone để tránh "trôi" khi joystick không ở chính giữa
+            const float deadZone = 0.2f;
+            if (Mathf.Abs(rawInput) < deadZone)
+            {
+                _moveDirection = 0f;
+            }
+            else
+            {
+                // Chỉ lấy hướng ±1 để di chuyển trái/phải nhất quán
+                _moveDirection = Mathf.Sign(rawInput);
+            }
+
+            // Chỉ flip khi đang di chuyển
+            if (_moveDirection != 0f)
             {
                 FlipCharacter(_moveDirection);
             }
         }
+
 
         public void MoveHorizontal()
         {
