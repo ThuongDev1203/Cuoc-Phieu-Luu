@@ -34,7 +34,7 @@ public class BossController : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        player = GameObject.FindGameObjectWithTag("Player")?.transform;
+        RefreshPlayerReference();
 
         if (bossData != null)
         {
@@ -190,7 +190,6 @@ public class BossController : MonoBehaviour
         isInHitState = false;
     }
 
-
     public void SetPlayerInChaseRange(bool inRange)
     {
         isPlayerInChaseRange = inRange;
@@ -203,6 +202,8 @@ public class BossController : MonoBehaviour
 
     void FlipTowardsPlayer()
     {
+        if (player == null) return;
+
         if ((player.position.x < transform.position.x && isFacingRight) ||
             (player.position.x > transform.position.x && !isFacingRight))
         {
@@ -212,7 +213,42 @@ public class BossController : MonoBehaviour
             transform.localScale = scale;
         }
     }
+
+    /// <summary>
+    /// Cập nhật lại tham chiếu player khi load lại level mới
+    /// </summary>
+    public void RefreshPlayerReference()
+    {
+        player = GameObject.FindGameObjectWithTag("Player")?.transform;
+        if (player == null)
+        {
+            Debug.LogWarning("RefreshPlayerReference: Không tìm thấy Player trong scene.");
+        }
+        else
+        {
+            Debug.Log("RefreshPlayerReference: Player đã được cập nhật.");
+        }
+    }
+
+    /// <summary>
+    /// Reset trạng thái boss khi bắt đầu level mới
+    /// </summary>
+    public void ResetBoss()
+    {
+        health = bossData.Data.MaxHealth;
+        currentState = State.Idle;
+        canAttack = true;
+        isInHitState = false;
+        isPlayerInAttackRange = false;
+        isPlayerInChaseRange = false;
+        lastAttackTime = Time.time - attackCooldown;
+
+        animator.ResetTrigger(bossData.animationSO.attackTrigger);
+        animator.ResetTrigger(bossData.animationSO.hitTrigger);
+        animator.ResetTrigger(bossData.animationSO.deathTrigger);
+        animator.ResetTrigger(bossData.animationSO.idleTrigger);
+        animator.ResetTrigger(bossData.animationSO.runTrigger);
+
+        ChangeState(State.Idle);
+    }
 }
-
-
-

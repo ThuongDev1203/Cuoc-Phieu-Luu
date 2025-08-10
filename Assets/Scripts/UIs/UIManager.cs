@@ -21,7 +21,7 @@ namespace UIs
         public UISetting uiSetting;
         public UIPause uiPause;
         public UIDeath uiDeath;
-
+        public UIWin uiWin;
         public void ShowPanel(UIPanel panel)
         {
             HideAllPanels();
@@ -50,6 +50,9 @@ namespace UIs
 
             if (uiDeath != null)
                 uiDeath.Hide();
+
+            if (uiWin != null)
+                uiWin.Hide();
         }
 
         public void ShowDialog(UIDialog dialog)

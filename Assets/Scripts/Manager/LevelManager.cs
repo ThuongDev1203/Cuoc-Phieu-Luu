@@ -41,7 +41,10 @@ namespace Manager
                 currentLevelInstance = Instantiate(prefab, levelParent);
                 StartCoroutine(AssignCameraToPlayer());
 
-                //Load nhạc nền tương ứng từ Resources/Audio/Level
+                // Bổ sung: gọi làm mới Boss sau khi load level xong
+                StartCoroutine(RefreshBossesAfterLevelLoad());
+
+                // Load nhạc nền tương ứng từ Resources/Audio/Level
                 string musicPath = $"Audio/Level{index + 1}";
                 AudioClip levelMusic = Resources.Load<AudioClip>(musicPath);
                 if (levelMusic != null)
@@ -79,6 +82,7 @@ namespace Manager
             }
         }
 
+        //fix Boss không nhận Player
         private IEnumerator AssignCameraToPlayer()
         {
             yield return new WaitForSeconds(0.05f); // đợi Player Awake
@@ -95,6 +99,26 @@ namespace Manager
             else
             {
                 Debug.LogWarning("Không tìm thấy player để gán cho camera.");
+            }
+        }
+
+        private IEnumerator RefreshBossesAfterLevelLoad()
+        {
+            yield return null; // đợi 1 frame để level instantiate xong
+
+            BossController[] bosses = GameObject.FindObjectsOfType<BossController>();
+            if (bosses.Length == 0)
+            {
+                Debug.LogWarning("Không tìm thấy Boss trong scene để refresh.");
+            }
+            else
+            {
+                foreach (var boss in bosses)
+                {
+                    boss.RefreshPlayerReference();
+                    boss.ResetBoss();
+                }
+                Debug.Log($"Đã refresh và reset trạng thái cho {bosses.Length} boss.");
             }
         }
     }

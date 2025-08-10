@@ -1,22 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
-using UIs;
+using Manager;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Manager;
 
 namespace UIs
 {
-    public class UIDeath : UIDialog
+    public class UIWin : UIDialog
     {
         [Header("ElementsPause UI")]
-        public Button restartButton;
+        public Button nextLvButton;
         public Button homeBtn;
+        public TMP_Text textCoinsCurrentLevel;
+        public TMP_Text textDiamondCurrentLevel;
 
         void Start()
         {
-            if (restartButton != null)
-                restartButton.onClick.AddListener(RestartLevel);
+            if (nextLvButton != null)
+                nextLvButton.onClick.AddListener(NextLevel);
 
             if (homeBtn != null)
                 homeBtn.onClick.AddListener(ReturnToLobby);
@@ -34,12 +36,19 @@ namespace UIs
             // Save settings if needed
         }
 
-        private void RestartLevel()
+        private void NextLevel()
         {
             SoundManager.Instance.PlayClickSound();
             Hide();
-            Time.timeScale = 1f;
-            GameManager.Instance.levelManager.ReloadCurrentLevel();
+
+            int currentLevel = GameManager.Instance.levelManager.GetCurrentLevelIndex();
+            int nextLevel = currentLevel + 1;
+
+            if (nextLevel < GameManager.Instance.levelManager.levelNames.Count)
+            {
+                GameManager.Instance.SaveCurrentLevel(nextLevel + 1);
+                GameManager.Instance.levelManager.LoadLevel(nextLevel);
+            }
         }
 
         private void ReturnToLobby()
@@ -63,3 +72,4 @@ namespace UIs
         }
     }
 }
+
