@@ -14,7 +14,7 @@ namespace Other
             if (collision.CompareTag("Player"))
             {
                 SoundManager.Instance.PlayCoinColect();
-                GameManager.Instance.coinManager.AddCoin(coinValue);
+                GameManager.Instance.coinManager.AddCoinThisLevel(coinValue);
                 Destroy(gameObject);
             }
         }

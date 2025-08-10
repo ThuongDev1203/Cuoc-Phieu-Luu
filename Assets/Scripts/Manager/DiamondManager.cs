@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Manager
@@ -7,21 +5,31 @@ namespace Manager
     public class DiamondManager : MonoBehaviour
     {
         private int totalDiamonds;
+        private int diamondsThisLevel;
+
         private const string DIAMOND_KEY = "TotalDiamonds";
 
         public int TotalDiamond => totalDiamonds;
+        public int DiamondsThisLevel => diamondsThisLevel;
 
         private void Start()
         {
-            //totalDiamonds = PlayerPrefs.GetInt(DIAMOND_KEY, 0);
-            GameManager.Instance.UpdateDiamondUI(totalDiamonds);
+            totalDiamonds = PlayerPrefs.GetInt(DIAMOND_KEY, 0);
+            diamondsThisLevel = 0;
         }
 
-        public void AddDiamond(int amount)
+        public void AddDiamondThisLevel(int amount)
         {
-            totalDiamonds += amount;
-            //PlayerPrefs.SetInt(DIAMOND_KEY, totalDiamonds);
+            diamondsThisLevel += amount;
+            GameManager.Instance.UpdateDiamondUI(diamondsThisLevel);
+        }
+
+        public void ApplyLevelDiamonds()
+        {
+            totalDiamonds += diamondsThisLevel;
+            PlayerPrefs.SetInt(DIAMOND_KEY, totalDiamonds);
             GameManager.Instance.UpdateDiamondUI(totalDiamonds);
+            diamondsThisLevel = 0;
         }
 
         public bool SpendDiamond(int amount)
@@ -29,13 +37,17 @@ namespace Manager
             if (totalDiamonds >= amount)
             {
                 totalDiamonds -= amount;
-                //PlayerPrefs.SetInt(DIAMOND_KEY, totalDiamonds);
+                PlayerPrefs.SetInt(DIAMOND_KEY, totalDiamonds);
                 GameManager.Instance.UpdateDiamondUI(totalDiamonds);
                 return true;
             }
-
-            Debug.LogWarning("Không đủ coin");
+            Debug.LogWarning("Không đủ kim cương");
             return false;
+        }
+
+        public int GetTotalDiamondsAfterLevel(int rewardDiamond)
+        {
+            return totalDiamonds + rewardDiamond;
         }
     }
 }
