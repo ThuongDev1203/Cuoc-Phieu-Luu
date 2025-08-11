@@ -26,6 +26,11 @@ public class UIDepInfo : UIPanel
     [SerializeField] private Button _returnButton;
     [SerializeField] private Button _buyButton;
 
+    [Header("Text Price")]
+    [SerializeField] private TMP_Text coinText;
+    [SerializeField] private TMP_Text diamondText;
+
+
     private UIShop shopPanel;
     private WeaponSO currentWeaponSO;
 
@@ -48,6 +53,9 @@ public class UIDepInfo : UIPanel
     public override void Show()
     {
         base.Show();
+
+        SetCoinText(GameManager.Instance.coinManager.TotalCoins);
+        SetDiamondText(GameManager.Instance.diamondManager.TotalDiamond);
     }
 
     public override void Hide()
@@ -158,5 +166,17 @@ public class UIDepInfo : UIPanel
     private bool IsPurchased(string weaponName)
     {
         return PlayerPrefs.GetInt("WeaponPurchased_" + weaponName, 0) == 1;
+    }
+
+    public void SetCoinText(int coin)
+    {
+        if (coinText != null)
+            coinText.text = coin.ToString();
+    }
+
+    public void SetDiamondText(int diamond)
+    {
+        if (diamondText != null)
+            diamondText.text = diamond.ToString();
     }
 }

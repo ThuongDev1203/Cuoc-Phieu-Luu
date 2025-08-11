@@ -63,6 +63,10 @@ namespace UIs
         {
             GameManager.Instance.coinManager.ApplyLevelCoins();
             GameManager.Instance.diamondManager.ApplyLevelDiamonds();
+
+            // Đồng bộ UI Lobby
+            // GameManager.Instance.uiManager.uiLobby.SetCoinText(GameManager.Instance.coinManager.TotalCoins);
+            // GameManager.Instance.uiManager.uiLobby.SetDiamondText(GameManager.Instance.diamondManager.TotalDiamond);
         }
 
         private void NextLevel()

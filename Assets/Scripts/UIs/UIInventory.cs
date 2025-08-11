@@ -27,6 +27,10 @@ namespace UIs
         [SerializeField] private UIInventorySlot slotPrefab;
         [SerializeField] private Transform slotParent;
 
+        [Header("Coin UI")]
+        public TMP_Text coinText;
+        public TMP_Text diamondText;
+
         private void Start()
         {
             if (_closeButton != null)
@@ -40,6 +44,9 @@ namespace UIs
         {
             base.Show();
             PopulateSlots();
+
+            SetCoinText(GameManager.Instance.coinManager.TotalCoins);
+            SetDiamondText(GameManager.Instance.diamondManager.TotalDiamond);
         }
 
         private void PopulateSlots()
@@ -70,6 +77,18 @@ namespace UIs
         private void OnSelectItem()
         {
             Debug.Log("Item selected!");
+        }
+
+        public void SetCoinText(int coin)
+        {
+            if (coinText != null)
+                coinText.text = coin.ToString();
+        }
+
+        public void SetDiamondText(int diamond)
+        {
+            if (diamondText != null)
+                diamondText.text = diamond.ToString();
         }
     }
 }

@@ -26,6 +26,7 @@ namespace UIs
 
         [Header("Coin UI")]
         public TMP_Text coinText;
+        public TMP_Text diamondText;
 
         protected override void Awake()
         {
@@ -102,13 +103,21 @@ namespace UIs
         public override void Show()
         {
             base.Show();
+
+            SetCoinText(GameManager.Instance.coinManager.TotalCoins);
+            SetDiamondText(GameManager.Instance.diamondManager.TotalDiamond);
         }
+
         public void SetCoinText(int coin)
         {
             if (coinText != null)
                 coinText.text = coin.ToString();
         }
 
-
+        public void SetDiamondText(int diamond)
+        {
+            if (diamondText != null)
+                diamondText.text = diamond.ToString();
+        }
     }
 }
