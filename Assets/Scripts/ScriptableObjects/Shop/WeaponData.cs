@@ -3,6 +3,12 @@ using UnityEngine;
 
 namespace ScriptableObjects.Shop
 {
+    public enum CurrencyType
+    {
+        Coins,
+        Diamonds
+    }
+
     [Serializable]
     public class WeaponData
     {
@@ -23,6 +29,7 @@ namespace ScriptableObjects.Shop
 
         [Header("Price")]
         [SerializeField] private int _price;
+        [SerializeField] private CurrencyType _currencyType;
 
         // Getter
         public string WeaponName => _weaponName;
@@ -35,5 +42,6 @@ namespace ScriptableObjects.Shop
         public int Damage => _damage;
         public string MoveSpeed => _moveSpeed;
         public int Price => _price;
+        public CurrencyType Currency => _currencyType;
     }
 }

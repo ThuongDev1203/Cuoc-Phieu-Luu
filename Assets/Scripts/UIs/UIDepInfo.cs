@@ -8,33 +8,39 @@ using Manager;
 public class UIDepInfo : UIPanel
 {
     [Header("UI Elements")]
-    [SerializeField] private Image icon;
-    [SerializeField] private TMP_Text nameText;
-    [SerializeField] private TMP_Text descriptionText;
-    [SerializeField] private TMP_Text priceText;
+    [SerializeField] private Image _icon;
+    [SerializeField] private TMP_Text _nameText;
+    [SerializeField] private TMP_Text _descriptionText;
+    [SerializeField] private TMP_Text _priceText;
+    [SerializeField] private Image _currencyIcon;
 
     [Header("Rarity")]
-    [SerializeField] private TMP_Text rarityText;
-    [SerializeField] private Image rarityIcon;
+    [SerializeField] private TMP_Text _rarityText;
+    [SerializeField] private Image _rarityIcon;
 
     [Header("Stats")]
-    [SerializeField] private TMP_Text damageText;
-    [SerializeField] private TMP_Text moveSpeedText;
+    [SerializeField] private TMP_Text _damageText;
+    [SerializeField] private TMP_Text _moveSpeedText;
 
     [Header("Buttons")]
-    [SerializeField] private Button returnButton;
-    [SerializeField] private Button buyButton;
+    [SerializeField] private Button _returnButton;
+    [SerializeField] private Button _buyButton;
 
     private UIShop shopPanel;
     private WeaponSO currentWeaponSO;
 
+    // Tham chiếu icon cho Coins & Diamonds
+    [Header("Currency Icons")]
+    [SerializeField] private Sprite coinSprite;
+    [SerializeField] private Sprite diamondSprite;
+
     private void Start()
     {
-        if (returnButton != null)
-            returnButton.onClick.AddListener(OnReturnToShop);
+        if (_returnButton != null)
+            _returnButton.onClick.AddListener(OnReturnToShop);
 
-        if (buyButton != null)
-            buyButton.onClick.AddListener(OnBuyItem);
+        if (_buyButton != null)
+            _buyButton.onClick.AddListener(OnBuyItem);
 
         shopPanel = transform.root.GetComponentInChildren<UIShop>(true);
     }
@@ -55,16 +61,34 @@ public class UIDepInfo : UIPanel
         currentWeaponSO = weaponSO;
 
         WeaponData weapon = weaponSO.Data;
-        icon.sprite = weapon.Icon;
-        nameText.text = weapon.WeaponName;
-        descriptionText.text = weapon.Description;
-        priceText.text = weapon.Price.ToString();
+        _icon.sprite = weapon.Icon;
+        _nameText.text = weapon.WeaponName;
+        _descriptionText.text = weapon.Description;
 
-        if (rarityText != null) rarityText.text = weapon.RarityName;
-        if (rarityIcon != null) rarityIcon.sprite = weapon.RarityIcon;
+        bool purchased = IsPurchased(weaponSO.name);
 
-        damageText.text = weapon.Damage.ToString();
-        moveSpeedText.text = weapon.MoveSpeed;
+        if (purchased)
+        {
+            _priceText.text = "Purchased";
+            if (_currencyIcon != null) _currencyIcon.enabled = false;
+            _buyButton.interactable = false;
+        }
+        else
+        {
+            _priceText.text = weapon.Price.ToString();
+            if (_currencyIcon != null)
+            {
+                _currencyIcon.enabled = true;
+                _currencyIcon.sprite = (weapon.Currency == CurrencyType.Coins) ? coinSprite : diamondSprite;
+            }
+            _buyButton.interactable = true;
+        }
+
+        if (_rarityText != null) _rarityText.text = weapon.RarityName;
+        if (_rarityIcon != null) _rarityIcon.sprite = weapon.RarityIcon;
+
+        _damageText.text = weapon.Damage.ToString();
+        _moveSpeedText.text = weapon.MoveSpeed;
     }
 
     private void OnReturnToShop()
@@ -82,15 +106,57 @@ public class UIDepInfo : UIPanel
             return;
         }
 
-        if (GameManager.Instance.coinManager != null &&
-            GameManager.Instance.coinManager.SpendCoin(currentWeaponSO.Data.Price))
+        WeaponData weapon = currentWeaponSO.Data;
+        bool success = false;
+
+        if (weapon.Currency == CurrencyType.Coins)
+        {
+            if (GameManager.Instance.coinManager != null &&
+                GameManager.Instance.coinManager.SpendCoin(weapon.Price))
+            {
+                success = true;
+            }
+            else
+            {
+                Debug.Log("Không đủ coin hoặc coinManager null");
+            }
+        }
+        else if (weapon.Currency == CurrencyType.Diamonds)
+        {
+            if (GameManager.Instance.diamondManager != null &&
+                GameManager.Instance.diamondManager.SpendDiamond(weapon.Price))
+            {
+                success = true;
+            }
+            else
+            {
+                Debug.Log("Không đủ gem hoặc gemManager null");
+            }
+        }
+
+        if (success)
         {
             InventoryManager.Instance.AddItem(currentWeaponSO);
             Debug.Log("Mua thành công: " + currentWeaponSO.name);
+
+            // Cập nhật UI
+            _priceText.text = "Purchased";
+            if (_currencyIcon != null) _currencyIcon.enabled = false;
+            _buyButton.interactable = false;
+
+            // Lưu trạng thái đã mua
+            SavePurchasedState(currentWeaponSO.name);
         }
-        else
-        {
-            Debug.Log("Không đủ coin hoặc coinManager null");
-        }
+    }
+
+    private void SavePurchasedState(string weaponName)
+    {
+        PlayerPrefs.SetInt("WeaponPurchased_" + weaponName, 1);
+        PlayerPrefs.Save();
+    }
+
+    private bool IsPurchased(string weaponName)
+    {
+        return PlayerPrefs.GetInt("WeaponPurchased_" + weaponName, 0) == 1;
     }
 }

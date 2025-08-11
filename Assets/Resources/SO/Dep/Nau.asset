@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Nau
   m_EditorClassIdentifier: 
   _data:
-    _depName: Nau
-    _depDamage: 0
-    _depSpeed: 0
-    _depLifetime: 0
+    _depName: Earth Breaker
+    _depDamage: 10
+    _depSpeed: 10
+    _depLifetime: 3
     _depType: 2
     _depPrefab: {fileID: 3476573420479507835, guid: d369e5c48355a0f40bfa06d26df38720, type: 3}

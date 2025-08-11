@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Xam
   m_EditorClassIdentifier: 
   _data:
-    _depName: Xam
-    _depDamage: 0
-    _depSpeed: 0
-    _depLifetime: 0
+    _depName: Storm Strider
+    _depDamage: 15
+    _depSpeed: 20
+    _depLifetime: 3
     _depType: 4
     _depPrefab: {fileID: 3476573420479507835, guid: 5ed2608a05e9ce1499fd566891230819, type: 3}

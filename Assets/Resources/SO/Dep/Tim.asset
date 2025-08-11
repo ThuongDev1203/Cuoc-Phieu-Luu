@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Tim
   m_EditorClassIdentifier: 
   _data:
-    _depName: Tim
-    _depDamage: 0
-    _depSpeed: 0
-    _depLifetime: 0
+    _depName: Shadow Kicker
+    _depDamage: 15
+    _depSpeed: 12
+    _depLifetime: 3
     _depType: 3
     _depPrefab: {fileID: 3476573420479507835, guid: 1d0659a79c353d047a220d21244b1865, type: 3}
