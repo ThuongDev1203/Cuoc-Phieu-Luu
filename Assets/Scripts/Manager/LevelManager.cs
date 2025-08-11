@@ -16,6 +16,7 @@ namespace Manager
         private GameObject currentLevelInstance;
         private int currentLevelIndex;
 
+        // Load level bình thường
         public void LoadLevel(int index)
         {
             if (index < 0 || index >= levelNames.Count)
@@ -61,7 +62,6 @@ namespace Manager
                 Debug.LogError("Không tìm thấy prefab tại: " + levelPath);
             }
         }
-
 
         public void ReloadCurrentLevel()
         {

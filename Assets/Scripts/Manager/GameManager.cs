@@ -59,7 +59,6 @@ namespace Manager
             int currentLevel = GetCurrentLevel();
             levelManager.LoadLevel(currentLevel - 1); // vì index bắt đầu từ 0
         }
-
         public void UpdateCoinUI(int coin)
         {
             uiManager.uiGame.SetCoinText(coin); // gọi trực tiếp

@@ -77,6 +77,7 @@ namespace UIs
         public override void Show()
         {
             base.Show();
+            ResetLevelUI();
         }
 
         /// <summary>
@@ -177,5 +178,12 @@ namespace UIs
             if (healthText != null)
                 healthText.text = health.ToString();
         }
+
+        public void ResetLevelUI()
+        {
+            SetCoinText(0);
+            SetDiamondText(0);
+        }
+
     }
 }
