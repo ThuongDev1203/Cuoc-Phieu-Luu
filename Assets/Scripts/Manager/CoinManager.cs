@@ -4,6 +4,7 @@ namespace Manager
 {
     public class CoinManager : MonoBehaviour
     {
+        public static CoinManager Instance { get; private set; }
         private int totalCoins;          // Tổng coin đã lưu (tất cả level)
         private int coinsThisLevel;      // Coin kiếm được trong level hiện tại
 

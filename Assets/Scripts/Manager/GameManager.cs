@@ -61,7 +61,11 @@ namespace Manager
         }
         public void UpdateCoinUI(int coin)
         {
-            uiManager.uiGame.SetCoinText(coin); // gọi trực tiếp
+            if (uiManager.uiGame != null)
+                uiManager.uiGame.SetCoinText(coin); // gọi trực tiếp
+
+            if (uiManager.uiLobby != null)
+                uiManager.uiLobby.SetCoinText(coin);
         }
 
         public void UpdateDiamondUI(int diamond)

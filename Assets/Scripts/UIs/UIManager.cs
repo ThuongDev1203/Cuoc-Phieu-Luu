@@ -16,6 +16,8 @@ namespace UIs
         public UILobby uiLobby;
         public UIShop uiShop;
         public UIStage uiStage;
+        public UIDepInfo uiDepInfo;
+        public UIInventory uiInventory;
 
         [Header("UI Dialogs")]
         public UISetting uiSetting;
@@ -41,6 +43,12 @@ namespace UIs
 
             if (uiShop != null)
                 uiShop.Hide();
+
+            if (uiDepInfo != null)
+                uiDepInfo.Hide();
+
+            if (uiInventory != null)
+                uiInventory.Hide();
 
             if (uiStage != null)
                 uiStage.Hide();

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using Manager;
+using TMPro;
 
 namespace UIs
 {
@@ -23,6 +24,9 @@ namespace UIs
         public GameObject userInfo;
         public GameObject statusBar;
 
+        [Header("Coin UI")]
+        public TMP_Text coinText;
+
         protected override void Awake()
         {
             base.Awake();
@@ -34,9 +38,8 @@ namespace UIs
             stageButton.onClick.AddListener(() => { OnButtonEffect(stageButton); OnStage(); });
             settingButton.onClick.AddListener(() => { OnButtonEffect(settingButton); OnSetting(); });
             shopButton.onClick.AddListener(() => { OnButtonEffect(shopButton); OnShop(); });
-            // inventoryButton.onClick.AddListener(() => { OnButtonEffect(inventoryButton); OnInventory(); });
+            inventoryButton.onClick.AddListener(() => { OnButtonEffect(inventoryButton); OnInventory(); });
             //rewardsButton.onClick.AddListener(() => { OnButtonEffect(rewardsButton); OnRewards(); });
-
         }
 
         private void OnButtonEffect(Button btn)
@@ -81,11 +84,11 @@ namespace UIs
             GameManager.Instance.uiManager.uiShop.Show();
         }
 
-        // private void OnInventory()
-        // {
-        //     Debug.Log("Đang mở UI Inventory");
-        //     GameManager.Instance.uiManager.uiInventory.Show();
-        // }
+        private void OnInventory()
+        {
+            Debug.Log("Đang mở UI Inventory");
+            GameManager.Instance.uiManager.uiInventory.Show();
+        }
 
         private void OnStage()
         {
@@ -100,6 +103,12 @@ namespace UIs
         {
             base.Show();
         }
+        public void SetCoinText(int coin)
+        {
+            if (coinText != null)
+                coinText.text = coin.ToString();
+        }
+
 
     }
 }
