@@ -1,24 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
+using Animation.Player.Controller;
+using Animation.Player.States;
+using Manager;
+using Other.Collision;
 using UnityEngine;
 
 public class ShellControll : MonoBehaviour
 {
-    public EnemyAISO enemyAISO; // Tham chiếu đến EnemyAISO để sử dụng AI
-    public Transform attackRange; // Vùng tấn công của con sò
-    public float attackRangeRadius = 2f; // Bán kính của vùng tấn công
-    public LayerMask playerLayer; // Layer của nhân vật
-    public bool isFacingRight = true; // Biến xác định hướng quay của con sò
-    public int damage = 5; // Số máu bị trừ khi tấn công
-    private int hitCount = 0; // Số lần chạm từ trên
-    private bool isDead = false; // Kiểm tra trạng thái chết
-    private bool isAttacking = false; // Kiểm tra trạng thái tấn công
-    public Animator animator; // Animator của con sò
+    public EnemyAISO enemyAISO; 
+    public Transform attackRange; 
+    public float attackRangeRadius = 2f; 
+    public LayerMask playerLayer; 
+    public bool isFacingRight = true; 
+    public int damage = 5; 
+    private int hitCount = 0; 
+    private bool isDead = false;
+    private bool isAttacking = false; 
+    public Animator animator; 
     public EnemyVFX enemyVFX;
-    private Rigidbody2D _rb; // Rigidbody2D của con sò
-
+    private Rigidbody2D _rb;
+    private PlayerController _player;
+    private PlayerCollision _playerCollision;
     void Start()
     {
+        _player = FindObjectOfType<PlayerController>();
+        _playerCollision = _player.GetComponent<PlayerCollision>();
         animator = GetComponent<Animator>();
         _rb = GetComponent<Rigidbody2D>();
         if (animator == null)
@@ -30,11 +37,9 @@ public class ShellControll : MonoBehaviour
     {
         if (isDead) return;
 
-        // Kiểm tra xem nhân vật có nằm trong vùng tấn công không
         Collider2D player = Physics2D.OverlapCircle(attackRange.position, attackRangeRadius, playerLayer);
         if (player != null)
         {
-            // Nếu có nhân vật trong vùng tấn công, chuyển sang trạng thái Attack
             if (!isAttacking)
             {
                 isAttacking = true;
@@ -44,69 +49,66 @@ public class ShellControll : MonoBehaviour
         }
         else
         {
-            // Nếu không có nhân vật trong vùng tấn công, chuyển về trạng thái Idle
             if (isAttacking)
             {
                 isAttacking = false;
                 animator.SetBool("isAttacking", false);
+                animator.SetBool("isIdle", true);
             }
         }
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        // Kiểm tra nếu nhân vật chạm vào con sò và nếu con sò đang tấn công
-        if (collision.gameObject.CompareTag("Character") && isAttacking)
+        if (collision.gameObject.CompareTag("Player") && isAttacking)
         {
-            // Kiểm tra xem nhân vật có chạm từ trên không
+           if (_player != null)
+        {
+            _player.ChangeState(new HitState(_player));
+            SoundManager.Instance.PlayHitPig();
+
+            if (_playerCollision != null)
+            {
+                _playerCollision.TakeDamage(damage);
+            }
+        }
             if (collision.transform.position.y > transform.position.y)
             {
                 hitCount++;
                 if (hitCount >= 3)
                 {
-                    // Kích hoạt VFX
                     if (enemyVFX != null)
                     {
                         enemyVFX.PlayVFX(transform.position);
                     }
-                    // Nếu chạm từ trên 3 lần, thực hiện hành động chết
                     isDead = true;
 
-                    // Thực hiện các hành động khi chết, ví dụ: ẩn con sò
                     gameObject.SetActive(false);
                 }
             }
         }
     }
 
-    // Hàm để quay con sò về phía nhân vật
     void FacePlayer(Transform player)
     {
-        // Tính toán hướng quay của con sò
         Vector3 direction = player.position - transform.position;
-        direction.z = 0; // Giữ lại chuyển động chỉ trên mặt phẳng 2D
+        direction.z = 0;
 
-        // Xác định xem nhân vật nằm bên trái hay bên phải con sò
         bool playerIsOnRight = direction.x > 0;
 
-        // Cập nhật biến isFacingRight dựa trên vị trí của nhân vật
         if (playerIsOnRight && !isFacingRight)
         {
-            Flip(); // Quay trái
+            Flip(); 
         }
         else if (!playerIsOnRight && isFacingRight)
         {
-            Flip(); // Quay phải
+            Flip();
         }
     }
-
-    // Hàm để quay trái/phải con sò
     void Flip()
     {
-        // Đảo ngược hướng của con sò
         isFacingRight = !isFacingRight;
 
-        // Lật con sò theo trục X
         transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
     }
 
