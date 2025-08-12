@@ -20,5 +20,6 @@ MonoBehaviour:
     _description: Strength from Mother Earth, each stomp causes small tremors.
     _damage: 10
     _moveSpeed: 10
-    _price: 200
+    _price: 1
     _currencyType: 0
+    _depSO: {fileID: 11400000, guid: fbb6a245a077e974597c48069d684067, type: 2}

@@ -7,7 +7,6 @@ namespace Other.Inventory
     public class UIInventorySlot : MonoBehaviour
     {
         [SerializeField] private Image icon;
-
         private WeaponSO weaponData;
         private UIInventory parentInventory;
 
@@ -19,7 +18,6 @@ namespace Other.Inventory
                 return;
             }
 
-            // Nếu chưa gán icon trong Inspector thì tìm trong con tên "Item"
             if (icon == null)
             {
                 Transform itemTransform = transform.Find("Item");
@@ -35,8 +33,11 @@ namespace Other.Inventory
             else
                 Debug.LogWarning("Không tìm thấy Image cho icon trong UIInventorySlot");
 
-            // Thêm sự kiện click
+            // Luôn tìm và gán sự kiện click
             Button btn = GetComponent<Button>();
+            if (btn == null)
+                btn = GetComponentInChildren<Button>(); // tìm trong con
+
             if (btn != null)
             {
                 btn.onClick.RemoveAllListeners();
@@ -44,7 +45,7 @@ namespace Other.Inventory
             }
             else
             {
-                Debug.LogWarning("Không có Button trên UIInventorySlot");
+                Debug.LogWarning("Không tìm thấy Button trong UIInventorySlot");
             }
         }
 

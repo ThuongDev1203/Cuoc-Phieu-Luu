@@ -22,3 +22,4 @@ MonoBehaviour:
     _moveSpeed: 12
     _price: 850
     _currencyType: 0
+    _depSO: {fileID: 11400000, guid: e3729b6631ff8884fa6d428ba2232f3c, type: 2}

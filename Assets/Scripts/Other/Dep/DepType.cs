@@ -7,6 +7,7 @@ namespace Other.Dep
         Nau,
         Tim,
         Xam,
-        XanhLa
+        XanhLa,
+        XanhDuong
     }
 }

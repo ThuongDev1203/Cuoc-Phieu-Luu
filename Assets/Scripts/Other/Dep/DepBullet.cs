@@ -25,6 +25,11 @@ namespace Other.Dep
         {
             transform.Translate(_direction * depSO.Data.DepSpeed * Time.deltaTime, Space.World);
         }
+        public void SetDepData(DepSO newDepSO)
+        {
+            depSO = newDepSO;
+            Destroy(gameObject, depSO.Data.DepLifetime);
+        }
 
         public void SetDirection(Vector2 direction)
         {

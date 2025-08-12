@@ -27,7 +27,7 @@ namespace Animation.Player.Controller
         [SerializeField] private float _groundCheckRadius = 0.2f;
 
         [Header("Dep")]
-        [SerializeField] private GameObject _depPrefab;
+        [SerializeField] private DepSO _currentDepSO;
         [SerializeField] private Transform _depSpawnPoint;
 
         //public
@@ -83,6 +83,19 @@ namespace Animation.Player.Controller
                 _playerSO.LoadData();
                 _maxJumpCount = _playerSO.Data.MaxJumpCount;
             }
+
+            //Load vũ khí đã lưu
+            string weaponName = PlayerPrefs.GetString("SelectedWeapon", "");
+            if (!string.IsNullOrEmpty(weaponName))
+            {
+                WeaponSO savedWeapon = Resources.Load<WeaponSO>("SO/Shop/" + weaponName);
+                if (savedWeapon != null && savedWeapon.Data.DepSO != null)
+                {
+                    SetDepSO(savedWeapon.Data.DepSO);
+                    Debug.Log("Load vũ khí: " + weaponName);
+                }
+            }
+
             ChangeState(new IdleState(this));
         }
 
@@ -183,6 +196,17 @@ namespace Animation.Player.Controller
             }
         }
 
+        public void SetDepSO(DepSO newDepSO)
+        {
+            if (newDepSO == null)
+            {
+                Debug.LogWarning("DepSO mới bị null, không đổi được!");
+                return;
+            }
+            _currentDepSO = newDepSO;
+            Debug.Log("Đã đổi DepSO sang: " + newDepSO.name);
+        }
+
 
         // private void FlipCharacter(float direction)
         // {
@@ -219,17 +243,22 @@ namespace Animation.Player.Controller
         }
         public void ThrowDep()
         {
-            if (_depPrefab && _depSpawnPoint)
+            if (_currentDepSO == null || _currentDepSO.Data == null || _currentDepSO.Data.DepPrefab == null)
             {
-                GameObject dep = Instantiate(_depPrefab, _depSpawnPoint.position, Quaternion.identity);
-                Vector2 direction = _facingRight ? Vector2.right : Vector2.left;
-                dep.GetComponent<DepBullet>().SetDirection(direction);
+                Debug.LogWarning("DepSO hoặc prefab dép chưa được gán!");
+                return;
             }
-            else
-            {
-                Debug.LogWarning("Chưa gán depPrefab hoặc depSpawnPoint!");
-            }
+
+            GameObject dep = Instantiate(
+                _currentDepSO.Data.DepPrefab,
+                _depSpawnPoint.position,
+                Quaternion.identity
+            );
+
+            Vector2 direction = _facingRight ? Vector2.right : Vector2.left;
+            dep.GetComponent<DepBullet>().SetDirection(direction);
         }
+
 
 
         // public void TriggerAttack2()

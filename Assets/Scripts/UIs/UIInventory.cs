@@ -5,6 +5,7 @@ using TMPro;
 using ScriptableObjects.Shop;
 using Manager;
 using Other.Inventory;
+using Animation.Player.Controller;
 
 namespace UIs
 {
@@ -30,6 +31,9 @@ namespace UIs
         [Header("Coin UI")]
         public TMP_Text coinText;
         public TMP_Text diamondText;
+
+        [Header("Save Dep selected")]
+        private WeaponSO _selectedWeapon;
 
         private void Start()
         {
@@ -65,6 +69,7 @@ namespace UIs
         public void Setup(WeaponSO weaponSO)
         {
             if (weaponSO == null) return;
+            _selectedWeapon = weaponSO;
             WeaponData weapon = weaponSO.Data;
 
             _rankText.text = weapon.RarityName;
@@ -74,10 +79,26 @@ namespace UIs
             _speedValueText.text = "+" + weapon.MoveSpeed;
         }
 
-        private void OnSelectItem()
+        public void OnSelectItem()
         {
-            Debug.Log("Item selected!");
+            if (_selectedWeapon == null || _selectedWeapon.Data.DepSO == null)
+            {
+                Debug.LogWarning("Chưa chọn vũ khí hoặc vũ khí chưa gán DepSO!");
+                return;
+            }
+
+            PlayerController player = FindObjectOfType<PlayerController>();
+            if (player != null)
+            {
+                player.SetDepSO(_selectedWeapon.Data.DepSO);
+                Debug.Log("Đã đổi dép sang: " + _selectedWeapon.Data.DepSO.Data.DepName);
+            }
+
+            //Lưu vũ khí đã chọn
+            PlayerPrefs.SetString("SelectedWeapon", _selectedWeapon.name);
+            PlayerPrefs.Save();
         }
+
 
         public void SetCoinText(int coin)
         {

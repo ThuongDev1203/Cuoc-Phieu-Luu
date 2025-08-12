@@ -31,6 +31,9 @@ namespace ScriptableObjects.Shop
         [SerializeField] private int _price;
         [SerializeField] private CurrencyType _currencyType;
 
+        [Header("Change Dep")]
+        [SerializeField] private DepSO _depSO;
+
         // Getter
         public string WeaponName => _weaponName;
         public Sprite Icon => _icon;
@@ -43,5 +46,6 @@ namespace ScriptableObjects.Shop
         public string MoveSpeed => _moveSpeed;
         public int Price => _price;
         public CurrencyType Currency => _currencyType;
+        public DepSO DepSO => _depSO;
     }
 }
