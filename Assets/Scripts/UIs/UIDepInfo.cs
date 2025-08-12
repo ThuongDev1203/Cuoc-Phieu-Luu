@@ -154,6 +154,8 @@ public class UIDepInfo : UIPanel
 
             // Lưu trạng thái đã mua
             SavePurchasedState(currentWeaponSO.name);
+
+            UpdateCurrencyUI();
         }
     }
 
@@ -166,6 +168,12 @@ public class UIDepInfo : UIPanel
     private bool IsPurchased(string weaponName)
     {
         return PlayerPrefs.GetInt("WeaponPurchased_" + weaponName, 0) == 1;
+    }
+
+    private void UpdateCurrencyUI()
+    {
+        SetCoinText(GameManager.Instance.coinManager.TotalCoins);
+        SetDiamondText(GameManager.Instance.diamondManager.TotalDiamond);
     }
 
     public void SetCoinText(int coin)

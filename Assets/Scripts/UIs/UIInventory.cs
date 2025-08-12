@@ -49,6 +49,17 @@ namespace UIs
             base.Show();
             PopulateSlots();
 
+            // Lấy lại vũ khí đang được dùng
+            string selectedWeaponName = PlayerPrefs.GetString("SelectedWeapon", "");
+            if (!string.IsNullOrEmpty(selectedWeaponName))
+            {
+                WeaponSO currentWeapon = InventoryManager.Instance.GetOwnedWeapons()
+                    .Find(w => w.name == selectedWeaponName);
+
+                if (currentWeapon != null)
+                    Setup(currentWeapon);
+            }
+
             SetCoinText(GameManager.Instance.coinManager.TotalCoins);
             SetDiamondText(GameManager.Instance.diamondManager.TotalDiamond);
         }
@@ -77,8 +88,35 @@ namespace UIs
             _infoText.text = weapon.Description;
             _attackValueText.text = "+" + weapon.Damage;
             _speedValueText.text = "+" + weapon.MoveSpeed;
-        }
 
+            // Kiểm tra nếu vũ khí này đang được chọn
+            string selectedWeaponName = PlayerPrefs.GetString("SelectedWeapon", "");
+            TMP_Text btnText = _selectButton.GetComponentInChildren<TMP_Text>();
+
+            // Lấy Image riêng
+            Image btnImage = _selectButton.GetComponent<Image>();
+
+            if (weaponSO.name == selectedWeaponName)
+            {
+                if (btnText != null) btnText.text = "Equipped";
+
+                // Đổi màu ngay
+                if (btnImage != null)
+                    btnImage.color = new Color(0.0f, 0.2f, 0.4f, 1f);
+            }
+            else
+            {
+                if (btnText != null) btnText.text = "Select";
+
+                if (btnImage != null)
+                    btnImage.color = Color.white;
+
+                ColorBlock colors = _selectButton.colors;
+                colors.normalColor = Color.white;
+                colors.highlightedColor = new Color(0.9f, 0.9f, 0.9f, 1f);
+                _selectButton.colors = colors;
+            }
+        }
         public void OnSelectItem()
         {
             if (_selectedWeapon == null || _selectedWeapon.Data.DepSO == null)
@@ -94,11 +132,14 @@ namespace UIs
                 Debug.Log("Đã đổi dép sang: " + _selectedWeapon.Data.DepSO.Data.DepName);
             }
 
-            //Lưu vũ khí đã chọn
+            // Lưu vũ khí đã chọn
             PlayerPrefs.SetString("SelectedWeapon", _selectedWeapon.name);
             PlayerPrefs.Save();
-        }
 
+            // Refresh lại UI toàn bộ slot để cập nhật nút
+            PopulateSlots();
+            Setup(_selectedWeapon);
+        }
 
         public void SetCoinText(int coin)
         {

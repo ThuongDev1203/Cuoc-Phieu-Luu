@@ -20,6 +20,6 @@ MonoBehaviour:
     _description: Perfect camouflage in the jungle, ideal for guerrilla warfare.
     _damage: 11
     _moveSpeed: 16
-    _price: 900
+    _price: 9
     _currencyType: 0
     _depSO: {fileID: 11400000, guid: a9504ef5440ecbb4d997f5f752de7ebf, type: 2}

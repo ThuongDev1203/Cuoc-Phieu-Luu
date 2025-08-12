@@ -22,7 +22,7 @@ namespace UIs
         private PlayerController playerController;
 
         private bool isAttack2OnCooldown = false;
-        private float attack2Cooldown = 5f;
+        private float attack2Cooldown = 3f;
         private float attack2CooldownTimer;
 
         [SerializeField] private Image attack2CooldownTile;

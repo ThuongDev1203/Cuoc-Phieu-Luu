@@ -30,24 +30,30 @@ namespace Other.Inventory
 
             if (icon != null)
                 icon.sprite = weapon.Data.Icon;
-            else
-                Debug.LogWarning("Không tìm thấy Image cho icon trong UIInventorySlot");
 
-            // Luôn tìm và gán sự kiện click
+            // Đổi màu viền hoặc hiệu ứng đang được dùng
+            string selectedWeaponName = PlayerPrefs.GetString("SelectedWeapon", "");
+            Image bg = GetComponent<Image>();
+            if (bg != null)
+            {
+                if (weapon.name == selectedWeaponName)
+                    bg.color = new Color(0.0f, 0.2f, 0.4f); // màu xanh đậm
+                else
+                    bg.color = Color.white;
+            }
+
+            // Gán sự kiện click
             Button btn = GetComponent<Button>();
             if (btn == null)
-                btn = GetComponentInChildren<Button>(); // tìm trong con
+                btn = GetComponentInChildren<Button>();
 
             if (btn != null)
             {
                 btn.onClick.RemoveAllListeners();
                 btn.onClick.AddListener(OnClickSlot);
             }
-            else
-            {
-                Debug.LogWarning("Không tìm thấy Button trong UIInventorySlot");
-            }
         }
+
 
         private void OnClickSlot()
         {
