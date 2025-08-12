@@ -47,6 +47,26 @@ namespace Other.Collision
                     TakeDamage(damage);
                 }
             }
+            else if (collision.gameObject.TryGetComponent<BreakableBox>(out var barrel))
+            {
+                ContactPoint2D contact = collision.GetContact(0);
+                bool isStomp = contact.normal.y > 0.5f;
+
+                if (isStomp)
+                {
+                    barrel.Break();
+                    Bounce();
+                }
+            }
+        }
+
+        private void Bounce()
+        {
+            Rigidbody2D rb = GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, 10f);
+            }
         }
 
         public void TakeDamage(int damage)

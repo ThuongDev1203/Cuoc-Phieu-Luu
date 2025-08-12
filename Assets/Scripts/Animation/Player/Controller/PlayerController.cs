@@ -235,6 +235,7 @@ namespace Animation.Player.Controller
             ChangeState(new Attack1State(this));
         }
 
+
         public void TriggerAttack2()
         {
             if (Time.time - _lastAttack2Time < _attack2Cooldown) return;
