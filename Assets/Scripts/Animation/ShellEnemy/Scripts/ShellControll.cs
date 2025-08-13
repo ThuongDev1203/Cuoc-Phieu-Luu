@@ -13,7 +13,7 @@ public class ShellControll : MonoBehaviour
     public float attackRangeRadius = 2f; 
     public LayerMask playerLayer; 
     public bool isFacingRight = true; 
-    public int damage = 5; 
+    public int damage; 
     private int hitCount = 0; 
     private bool isDead = false;
     private bool isAttacking = false; 
@@ -33,45 +33,46 @@ public class ShellControll : MonoBehaviour
             Debug.LogError("Animator component is missing on the ShellControll script.");
         }
     }
+    public void ResetAttack()
+    {
+        isAttacking = false;
+    }
+
     void Update()
     {
         if (isDead) return;
 
         Collider2D player = Physics2D.OverlapCircle(attackRange.position, attackRangeRadius, playerLayer);
-        if (player != null)
-        {
-            if (!isAttacking)
-            {
-                isAttacking = true;
-                animator.SetBool("isAttacking", true);
-            }
-            FacePlayer(player.transform);
-        }
-        else
-        {
-            if (isAttacking)
-            {
-                isAttacking = false;
-                animator.SetBool("isAttacking", false);
-                animator.SetBool("isIdle", true);
-            }
-        }
+    if (player != null)
+    {
+        isAttacking = true;
+        animator.SetTrigger("isAttacking"); // Attack là trigger
+        animator.SetBool("isIdle", false);  // Đang tấn công thì không idle
+        FacePlayer(player.transform);
+    }
+    else
+    {
+        isAttacking = false;
+        animator.SetBool("isIdle", true);   // Idle là bool
+    }
+
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player") && isAttacking)
         {
+         damage = (int)enemyAISO.Data.AttackDamage;
            if (_player != null)
-        {
-            _player.ChangeState(new HitState(_player));
-            SoundManager.Instance.PlayHitPig();
-
-            if (_playerCollision != null)
             {
-                _playerCollision.TakeDamage(damage);
+                _player.ChangeState(new HitState(_player));
+                SoundManager.Instance.PlayHitPig();
+
+                if (_playerCollision != null)
+                {
+                    _playerCollision.TakeDamage(damage);
+                }
             }
-        }
             if (collision.transform.position.y > transform.position.y)
             {
                 hitCount++;

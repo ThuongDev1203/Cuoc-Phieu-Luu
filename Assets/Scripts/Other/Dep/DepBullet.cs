@@ -2,6 +2,7 @@ using UnityEngine;
 using ScriptableObjects.DepDataSO;
 using Other.Collision;
 using Manager;
+using Animation.EnemyAI.Startfish.Scripts;
 
 namespace Other.Dep
 {
@@ -61,6 +62,16 @@ namespace Other.Dep
             if (collision.CompareTag("Ground"))
             {
                 Destroy(gameObject);
+            }
+
+            if (collision.CompareTag("StarFish"))
+            {
+                var starFishControl = collision.GetComponent<StarFishControl>();
+                if (starFishControl != null)
+                {
+                    collision.GetComponent<StarFishControl>()?.StarFishTakeDamage(depSO.Data.DepDamage);
+                    Destroy(gameObject);
+                }
             }
         }
     }

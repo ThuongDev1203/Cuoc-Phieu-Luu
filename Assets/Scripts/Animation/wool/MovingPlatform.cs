@@ -9,10 +9,14 @@ public class MovingPlatform : MonoBehaviour
     public float speed = 3f; 
 
     private Vector3 target; 
+    private Vector3 _posA;
+    private Vector3 _posB;
 
     void Start()
     {
-        target = pointB.position; 
+        _posA = pointA.position;
+        _posB = pointB.position;
+        target = _posB;
     }
 
     void Update()
@@ -21,7 +25,7 @@ public class MovingPlatform : MonoBehaviour
 
         if (Vector3.Distance(transform.position, target) < 0.1f)
         {
-            target = target == pointA.position ? pointB.position : pointA.position;
+            target = target == _posA ? _posB : _posA;
         }
     }
 

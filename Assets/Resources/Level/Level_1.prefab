@@ -83,7 +83,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b925ebfd33b1a24893131515733f533, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallaxSpeed: 0.02
+  parallaxSpeed: 1
 --- !u!1 &673356574903283765
 GameObject:
   m_ObjectHideFlags: 0
@@ -27372,8 +27372,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 3098910813031315749}
-  destroyDelay: 0.5
-  bounceForce: 8
 --- !u!212 &3883628960500305493
 SpriteRenderer:
   m_ObjectHideFlags: 0
