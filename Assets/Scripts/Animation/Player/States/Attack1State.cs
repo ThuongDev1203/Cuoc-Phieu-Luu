@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Animation.Player.Controller;
+using Manager;
 
 namespace Animation.Player.States
 {
@@ -14,6 +15,7 @@ namespace Animation.Player.States
 
         public override void Enter()
         {
+            SoundManager.Instance.PlayAttackOne();
             player.Anim.TriggerAttack1(); // Gọi trigger trong Animator
         }
 

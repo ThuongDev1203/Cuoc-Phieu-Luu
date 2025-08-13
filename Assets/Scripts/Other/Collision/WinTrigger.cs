@@ -18,6 +18,7 @@ public class WinTrigger : MonoBehaviour
             {
                 transition.ShowTransition(() =>
                 {
+                    SoundManager.Instance.PLayWin();
                     // Khi transition xong thì hiện UI Win
                     UIManager uiManager = FindObjectOfType<UIManager>();
                     if (uiManager != null)

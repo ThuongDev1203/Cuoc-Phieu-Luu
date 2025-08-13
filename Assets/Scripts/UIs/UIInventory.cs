@@ -119,6 +119,8 @@ namespace UIs
         }
         public void OnSelectItem()
         {
+            SoundManager.Instance.PlayClickSound();
+
             if (_selectedWeapon == null || _selectedWeapon.Data.DepSO == null)
             {
                 Debug.LogWarning("Chưa chọn vũ khí hoặc vũ khí chưa gán DepSO!");

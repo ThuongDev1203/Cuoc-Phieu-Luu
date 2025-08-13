@@ -3,6 +3,7 @@ using Animation.Player.Controller;
 using UIs;
 using System.Collections;
 using System;
+using Manager;
 
 namespace Other.Collision
 {
@@ -54,6 +55,7 @@ namespace Other.Collision
 
                 if (isStomp)
                 {
+                    SoundManager.Instance.PLayBoxBreak();
                     barrel.Break();
                     Bounce();
                 }

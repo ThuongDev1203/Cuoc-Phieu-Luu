@@ -111,15 +111,15 @@ namespace Animation.Player.Controller
             }
             _wasGroundedLastFrame = IsGrounded;
 
-            // Phát âm thanh run
-            bool isRunningNow = IsGrounded && Mathf.Abs(_moveDirection) > 0;
+            // // Phát âm thanh run
+            // bool isRunningNow = IsGrounded && Mathf.Abs(_moveDirection) > 0;
 
-            if (isRunningNow && !wasRunningLastFrame)
-            {
-                SoundManager.Instance.PlayRun();
-            }
+            // if (isRunningNow && !wasRunningLastFrame)
+            // {
+            //     SoundManager.Instance.PlayRun();
+            // }
 
-            wasRunningLastFrame = isRunningNow;
+            // wasRunningLastFrame = isRunningNow;
         }
 
         private void FixedUpdate()

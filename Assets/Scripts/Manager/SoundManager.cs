@@ -16,6 +16,10 @@ namespace Manager
         public AudioClip hitPig;
         public AudioClip trap_falling;
         public AudioClip nemdep;
+        public AudioClip attackone;
+        public AudioClip boxBreak;
+        public AudioClip win;
+        public AudioClip lose;
 
 
         private AudioSource musicSource;
@@ -142,6 +146,30 @@ namespace Manager
         {
             if (nemdep == null) return;
             sfxSource.PlayOneShot(nemdep);
+        }
+
+        public void PlayAttackOne()
+        {
+            if (attackone == null) return;
+            sfxSource.PlayOneShot(attackone);
+        }
+
+        public void PLayBoxBreak()
+        {
+            if (boxBreak == null) return;
+            sfxSource.PlayOneShot(boxBreak);
+        }
+
+        public void PLayWin()
+        {
+            if (win == null) return;
+            sfxSource.PlayOneShot(win);
+        }
+
+        public void PLayLose()
+        {
+            if (lose == null) return;
+            sfxSource.PlayOneShot(lose);
         }
 
         // -----------------------------
