@@ -59,7 +59,7 @@ namespace Animation.Player.Controller
         private float _attackCooldown = 0.5f;
         private float _lastAttackTime = 0f;
 
-        private float _attack2Cooldown = 5f;
+        private float _attack2Cooldown = 3f;
         private float _lastAttack2Time = 0f;
 
 
@@ -250,15 +250,18 @@ namespace Animation.Player.Controller
                 return;
             }
 
+            Vector2 direction = _facingRight ? Vector2.right : Vector2.left;
+            Vector3 spawnPos = _depSpawnPoint.position + (Vector3)direction * 0.3f; // đẩy ra 0.3m
+
             GameObject dep = Instantiate(
                 _currentDepSO.Data.DepPrefab,
-                _depSpawnPoint.position,
+                spawnPos,
                 Quaternion.identity
             );
 
-            Vector2 direction = _facingRight ? Vector2.right : Vector2.left;
             dep.GetComponent<DepBullet>().SetDirection(direction);
         }
+
 
 
 

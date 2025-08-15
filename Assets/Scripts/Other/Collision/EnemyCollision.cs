@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UIs;
 using UnityEngine;
 
 namespace Other.Collision
@@ -21,6 +22,17 @@ namespace Other.Collision
         {
             _currentHealth -= damage;
             Debug.Log($"{enemySO.Data.EnemyName} nhận {damage} damage, còn {_currentHealth} máu");
+
+            // Cập nhật UI thanh máu
+            if (_currentHealth < enemySO.Data.Health) // nghĩa là đã bị đánh
+            {
+                UIHealthBar.Instance.SetTarget(
+                    enemySO.Data.EnemyIcon,
+                    enemySO.Data.EnemyName,
+                    Mathf.RoundToInt(enemySO.Data.Health),
+                    Mathf.RoundToInt(_currentHealth)
+                );
+            }
 
             if (_currentHealth <= 0)
             {

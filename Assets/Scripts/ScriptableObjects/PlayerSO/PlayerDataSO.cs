@@ -21,7 +21,13 @@ namespace SriptableObjects.PlayerSO
         public float Speed => _speed;
         public float JumpForce => _jumpForce;
         public int MaxJumpCount => _maxJumpCount;
-        public int Health => _health;
+        //public int Health => _health;
+        public int Health
+        {
+            get => _health;
+            set => _health = value;
+        }
+
         public int MaxHealth => _maxHealth;
         public int AttackDamage => _attackDamage;
         public int Attack1Damage => _attack1Damage;

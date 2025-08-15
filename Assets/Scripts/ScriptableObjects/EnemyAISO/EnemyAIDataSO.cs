@@ -11,12 +11,14 @@ namespace SriptableObjects.EnemyAISO
     [Serializable]
     public class EnemyDataAISO
     {
+        [SerializeField] private Sprite _enemyIcon;
         [SerializeField] private string _enemyName;
         [SerializeField] private float _health;
         [SerializeField] private float _speed;
         [SerializeField] private float _attackDamage;
         [SerializeField] private float _detectRange;
 
+        public Sprite EnemyIcon => _enemyIcon;
         public string EnemyName => _enemyName;
         public float Health => _health;
         public float Speed => _speed;

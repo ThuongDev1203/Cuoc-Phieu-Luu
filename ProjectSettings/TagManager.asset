@@ -9,6 +9,7 @@ TagManager:
   - Boss
   - StarFish
   - ShellEnemy
+  - Heal
   layers:
   - Default
   - TransparentFX

@@ -8,6 +8,7 @@ namespace ScriptableObjects.BossSO
     [Serializable]
     public class BossSOData
     {
+        [SerializeField] private Sprite _bossIcon;
         [SerializeField] private string _bossName;
         [SerializeField] private float _chaseRange;
         [SerializeField] private float _moveSpeed;
@@ -16,6 +17,7 @@ namespace ScriptableObjects.BossSO
         [SerializeField] private int _maxHealth;
         [SerializeField] private int _health;
 
+        public Sprite BossIcon => _bossIcon;
         public string BossName => _bossName;
         public float ChaseRange => _chaseRange;
         public float MoveSpeed => _moveSpeed;

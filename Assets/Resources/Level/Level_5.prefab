@@ -83,7 +83,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b925ebfd33b1a24893131515733f533, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallaxSpeed: 0.02
+  parallaxSpeed: 0.01
 --- !u!1 &673356574903283765
 GameObject:
   m_ObjectHideFlags: 0
@@ -27209,7 +27209,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _groundCheckRadius: 0.2
-  _depPrefab: {fileID: 3476573420479507835, guid: fb24fae3b6e595e418be82adf4ff408a, type: 3}
+  _currentDepSO: {fileID: 0}
   _depSpawnPoint: {fileID: 3351522025301066864}
 --- !u!114 &1057641864822223452
 MonoBehaviour:
