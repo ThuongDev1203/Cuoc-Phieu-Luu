@@ -6,15 +6,15 @@ namespace ScriptableObjects.BulletEnemy
     [Serializable]
     public class BulletDataSO
     {
-        [SerializeField] private int _Damage;
-        [SerializeField] private float _Speed;
-        [SerializeField] private float _Lifetime;
-        [SerializeField] private GameObject _Prefab;
+        [SerializeField] private int _damage;
+        [SerializeField] private float _speed;
+        [SerializeField] private float _lifetime;
+        [SerializeField] private GameObject _prefab;
 
-        public int Damage => _Damage;
-        public float Speed => _Speed;
-        public float Lifetime => _Lifetime;
-        public GameObject Prefab => _Prefab;
+        public int Damage => _damage;
+        public float Speed => _speed;
+        public float Lifetime => _lifetime;
+        public GameObject Prefab => _prefab;
     }
 }
 

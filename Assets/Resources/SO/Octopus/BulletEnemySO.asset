@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BulletEnemySO
   m_EditorClassIdentifier: 
   _data:
-    _Damage: 10
-    _Speed: 15
-    _Lifetime: 0
-    _Prefab: {fileID: 0}
+    _damage: 0
+    _speed: 0
+    _lifetime: 0
+    _prefab: {fileID: 5082344760919834865, guid: 650596dbc9b4d19478cc35fbd7eb9185, type: 3}
