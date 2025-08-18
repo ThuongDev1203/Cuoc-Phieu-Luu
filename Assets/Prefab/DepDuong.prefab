@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7795c11670196a64e8f104c032396286, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  depSO: {fileID: 11400000, guid: 731daaff58d505e4a9b41caf87f65e2d, type: 2}
+  depSO: {fileID: 11400000, guid: 6c338b853fef53a41bb6e39e97e258af, type: 2}
   groundCollider: {fileID: 0}
 --- !u!212 &110409191141034367
 SpriteRenderer:
