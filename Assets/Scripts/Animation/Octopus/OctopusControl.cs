@@ -1,57 +1,56 @@
 using System.Collections;
-using System.Collections.Generic;
-using Other.Collision;
-using UnityEditor.Experimental;
 using UnityEngine;
 
 public class OctopusControl : MonoBehaviour
 {
-    [SerializeField] private EnemyAISO octopus;
+    [SerializeField] private OctopusVision vision;
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private BulletSO currentSO;
     public Animator animator;
-    private Rigidbody2D _rb;
-    private float raycast = 5f;
-    private Vector2 _direction = Vector2.right; 
-    private PlayerCollision _playerCollision;
 
-    // Start is called before the first frame update
-    void Start()
+    private float _attackCooldown = 3f; // 3 giây
+    private float _lastAttackTime = 0f;
+
+    private void Start()
     {
-         _playerCollision = GetComponent<PlayerCollision>();
-        _rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();        
+        animator = GetComponent<Animator>();
     }
 
-    void checkwraycast()
+    private void Update()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, _direction, raycast);
-
-        if (hit.collider != null)
+        if (vision.IsPlayerDetected(out Collider2D player))
         {
-            if (hit.collider.CompareTag("Player"))
-            {
-                if (currentSO != null && currentSO.Data.Prefab != null)
-            {
-                Debug.LogWarning("DepSO hoặc prefab dép chưa được gán!");
-                return;
-            }
-
-            GameObject dep = Instantiate(
-                currentSO.Data.Prefab,
-                spawnPoint.position,
-                Quaternion.identity
-            );
-
-            // Vector2 direction = _facingRight ? Vector2.right : Vector2.left;
-            // dep.GetComponent<DepBullet>().SetDirection(direction);
-            }
+            TryAttack();
+        }
+        else
+        {
+            animator.SetBool("isIdle", true);
+        }
     }
-    }
-    
-    // Update is called once per frame
-    void Update()
+
+    private void TryAttack()
     {
-        
+        if (Time.time - _lastAttackTime < _attackCooldown) return;
+
+        _lastAttackTime = Time.time;
+        animator.SetTrigger("isAttacking");
+
+        // Gọi bắn ngay 1 viên
+        Shoot();
+
+        // Reset lại sau khi bắn
+        StartCoroutine(ResetAttackAnim());
+    }
+
+    private IEnumerator ResetAttackAnim()
+    {
+        yield return new WaitForSeconds(0.5f); // thời gian anim kết thúc
+        animator.ResetTrigger("isAttacking");
+        animator.SetBool("isIdle", true);
+    }
+
+    private void Shoot()
+    {
+        Instantiate(currentSO.Data.Prefab, spawnPoint.position, Quaternion.identity);
     }
 }

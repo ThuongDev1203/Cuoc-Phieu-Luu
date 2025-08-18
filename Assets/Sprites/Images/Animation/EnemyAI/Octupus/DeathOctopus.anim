@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Attack
+  m_Name: DeathOctopus
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,13 +21,13 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 844256752, guid: b01d9b2452f35f5418bc9444aabe972c, type: 3}
+      value: {fileID: -1398399265, guid: e73e17dec6438ba4dac42355c03ffd33, type: 3}
     - time: 0.16666667
-      value: {fileID: -1144363643, guid: b01d9b2452f35f5418bc9444aabe972c, type: 3}
+      value: {fileID: -143674583, guid: e73e17dec6438ba4dac42355c03ffd33, type: 3}
     - time: 0.33333334
-      value: {fileID: 1936048551, guid: b01d9b2452f35f5418bc9444aabe972c, type: 3}
+      value: {fileID: 1522596158, guid: e73e17dec6438ba4dac42355c03ffd33, type: 3}
     - time: 0.5
-      value: {fileID: 1072706050, guid: b01d9b2452f35f5418bc9444aabe972c, type: 3}
+      value: {fileID: 501967422, guid: e73e17dec6438ba4dac42355c03ffd33, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -50,10 +50,10 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 844256752, guid: b01d9b2452f35f5418bc9444aabe972c, type: 3}
-    - {fileID: -1144363643, guid: b01d9b2452f35f5418bc9444aabe972c, type: 3}
-    - {fileID: 1936048551, guid: b01d9b2452f35f5418bc9444aabe972c, type: 3}
-    - {fileID: 1072706050, guid: b01d9b2452f35f5418bc9444aabe972c, type: 3}
+    - {fileID: -1398399265, guid: e73e17dec6438ba4dac42355c03ffd33, type: 3}
+    - {fileID: -143674583, guid: e73e17dec6438ba4dac42355c03ffd33, type: 3}
+    - {fileID: 1522596158, guid: e73e17dec6438ba4dac42355c03ffd33, type: 3}
+    - {fileID: 501967422, guid: e73e17dec6438ba4dac42355c03ffd33, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}

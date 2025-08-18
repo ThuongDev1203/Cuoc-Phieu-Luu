@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Octopus
   m_EditorClassIdentifier: 
   _data:
+    _enemyIcon: {fileID: 21300000, guid: 0e07c8fb8158b4d95bc5184c10777d99, type: 3}
     _enemyName: Octopus
     _health: 100
     _speed: 0
-    _attackDamage: 15
+    _attackDamage: 0
     _detectRange: 0
