@@ -3,6 +3,7 @@ using ScriptableObjects.BossSO;
 using System.Collections;
 using Other.Collision;
 using Animation.Player.Controller;
+using UIs;
 
 public class BossController : MonoBehaviour
 {
@@ -26,6 +27,9 @@ public class BossController : MonoBehaviour
     private bool isPlayerInAttackRange = false;
     private bool isFacingRight = false;
     private bool isInHitState = false;
+
+    private Coroutine hideUICoroutine;
+    [SerializeField] private float uiVisibleTime = 2f; // UI hiện trong 2 giây
 
     private enum State { Idle, Run, Attack, Hit, Death }
     private State currentState = State.Idle;
@@ -159,15 +163,28 @@ public class BossController : MonoBehaviour
         health -= damage;
         Debug.Log($"Boss nhận {damage} sát thương. Máu còn lại: {health}");
 
-        if (health > 0)
+        // Hiện UIHealthBar khi bị đánh
+        if (UIHealthBar.Instance != null)
         {
-            StartCoroutine(HitRoutine());
+            UIHealthBar.Instance.SetTarget(
+                bossData.Data.BossIcon,
+                bossData.Data.BossName,
+                bossData.Data.MaxHealth,
+                health
+            );
+
+            // Reset coroutine nếu đang chạy
+            if (hideUICoroutine != null) StopCoroutine(hideUICoroutine);
+            hideUICoroutine = StartCoroutine(HideUIAfterDelay());
         }
+
+        if (health > 0)
+            StartCoroutine(HitRoutine());
         else
         {
-            StopAllCoroutines(); //Dừng tất cả coroutine cũ (HitRoutine)
+            StopAllCoroutines();
             ChangeState(State.Death);
-            isInHitState = false; // Cho phép Update() thoát hẳn
+            isInHitState = false;
         }
     }
 
@@ -188,6 +205,13 @@ public class BossController : MonoBehaviour
             ChangeState(State.Idle);
 
         isInHitState = false;
+    }
+
+    private IEnumerator HideUIAfterDelay()
+    {
+        yield return new WaitForSeconds(uiVisibleTime);
+        if (UIHealthBar.Instance != null)
+            UIHealthBar.Instance.Hide();
     }
 
     public void SetPlayerInChaseRange(bool inRange)

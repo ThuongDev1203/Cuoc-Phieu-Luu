@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UIs;
 using UnityEngine;
 
@@ -12,6 +10,7 @@ namespace Other.Collision
     {
         [SerializeField] private EnemyAISO enemySO;
         private float _currentHealth;
+        private bool _uiShown = false;
 
         private void Start()
         {
@@ -23,22 +22,25 @@ namespace Other.Collision
             _currentHealth -= damage;
             Debug.Log($"{enemySO.Data.EnemyName} nhận {damage} damage, còn {_currentHealth} máu");
 
-            // Cập nhật UI thanh máu
-            if (_currentHealth < enemySO.Data.Health) // nghĩa là đã bị đánh
+            if (UIHealthBar.Instance != null)
             {
-                UIHealthBar.Instance.SetTarget(
-                    enemySO.Data.EnemyIcon,
-                    enemySO.Data.EnemyName,
-                    Mathf.RoundToInt(enemySO.Data.Health),
-                    Mathf.RoundToInt(_currentHealth)
-                );
-            }
-
-            if (_currentHealth <= 0)
-            {
-                Die();
+                if (_currentHealth <= 0)
+                {
+                    UIHealthBar.Instance.UpdateHealth(0);
+                    Die();
+                }
+                else
+                {
+                    UIHealthBar.Instance.SetTarget(
+                        enemySO.Data.EnemyIcon,
+                        enemySO.Data.EnemyName,
+                        Mathf.RoundToInt(enemySO.Data.Health),
+                        Mathf.RoundToInt(_currentHealth)
+                    );
+                }
             }
         }
+
 
         public float GetAttackDamage()
         {
