@@ -126,12 +126,20 @@ namespace UIs
             if (playerController != null)
             {
                 playerController.TriggerAttack1();
+
+                // Gọi phá thùng
+                var hitbox = playerController.GetComponentInChildren<Other.Collision.AttackHitbox>();
+                if (hitbox != null)
+                {
+                    hitbox.CheckAndDestroyBoxes();
+                }
             }
             else
             {
                 Debug.LogWarning("PlayerController still not found!");
             }
         }
+
 
 
         private void OnAttack2()

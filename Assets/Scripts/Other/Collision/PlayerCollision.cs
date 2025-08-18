@@ -4,6 +4,7 @@ using UIs;
 using System.Collections;
 using System;
 using Manager;
+using Other.Heal;
 
 namespace Other.Collision
 {
@@ -62,6 +63,26 @@ namespace Other.Collision
             }
         }
 
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.CompareTag("Heal"))
+            {
+                HealItem healItem = other.GetComponent<HealItem>();
+                if (healItem != null)
+                {
+                    HealManager healManager = FindObjectOfType<HealManager>();
+                    if (healManager != null)
+                    {
+                        healManager.Heal(healItem.HealSO.Data.Healing);
+                        _uiGame?.SetHealthText(healManager.GetCurrentHealth());
+                    }
+                }
+
+                Destroy(other.gameObject);
+            }
+        }
+
+
         private void Bounce()
         {
             Rigidbody2D rb = GetComponent<Rigidbody2D>();
@@ -73,19 +94,21 @@ namespace Other.Collision
 
         public void TakeDamage(int damage)
         {
-            _currentHealth -= damage;
-            Debug.Log($"Player nhận {damage} damage, còn {_currentHealth} máu");
+            // Trừ máu trực tiếp vào ScriptableObject
+            playerSO.Data.Health -= damage;
 
-            _uiGame?.SetHealthText(_currentHealth);
+            Debug.Log($"Player nhận {damage} damage, còn {playerSO.Data.Health} máu");
 
-            if (_currentHealth <= 0)
+            _uiGame?.SetHealthText(playerSO.Data.Health);
+
+            if (playerSO.Data.Health <= 0)
             {
                 Debug.Log("Player death.");
                 _animatorController.TriggerDeath();
-
                 StartCoroutine(HandleDeathUI());
             }
         }
+
 
         private IEnumerator HandleDeathUI()
         {

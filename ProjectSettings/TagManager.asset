@@ -10,6 +10,8 @@ TagManager:
   - StarFish
   - ShellEnemy
   - Heal
+  - Attack1_Hitbox
+  - Box
   layers:
   - Default
   - TransparentFX

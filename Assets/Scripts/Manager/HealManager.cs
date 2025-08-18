@@ -9,30 +9,45 @@ namespace Manager
         [SerializeField] private PlayerSO playerSO;
 
         [Header("Heal Settings")]
-        [SerializeField] private int healAmount = 5;
+        [SerializeField] private HealSO healSO;
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            if (collision.CompareTag("Heal"))
+            if (other.CompareTag("Heal"))
             {
-                Heal(healAmount);
-
-                Destroy(collision.gameObject);
+                Heal(healSO.Data.Healing);
+                Destroy(other.gameObject);
             }
         }
 
         /// <summary>
-        /// Hồi máu cho Player
+        /// Hồi máu cho Player, đảm bảo không vượt quá MaxHealth
         /// </summary>
         public void Heal(int amount)
         {
-            int currentHealth = playerSO.Data.Health;
-            int maxHealth = playerSO.Data.MaxHealth;
+            int beforeHeal = playerSO.Data.Health;
 
-            playerSO.Data.Health = currentHealth + amount;
+            // Công thức chuẩn: không vượt quá MaxHealth
+            int newHealth = playerSO.Data.Health + amount;
+            if (newHealth > playerSO.Data.MaxHealth)
+            {
+                newHealth = playerSO.Data.MaxHealth;
+            }
 
-            Debug.Log($"[HealManager] Player healed {amount} HP. Current HP: {playerSO.Data.Health}/{maxHealth}");
+            playerSO.Data.Health = newHealth;
+
+            int healed = newHealth - beforeHeal;
+
+            Debug.Log($"[HealManager] Player hồi {healed}/{amount}. Máu hiện tại: {playerSO.Data.Health}/{playerSO.Data.MaxHealth}");
+        }
+
+
+        /// <summary>
+        /// Lấy máu hiện tại
+        /// </summary>
+        public int GetCurrentHealth()
+        {
+            return playerSO.Data.Health;
         }
     }
-
 }
