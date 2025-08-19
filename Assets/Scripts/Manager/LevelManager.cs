@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Other;
+using UIs;
 
 namespace Manager
 {
@@ -56,10 +57,39 @@ namespace Manager
                 {
                     Debug.LogWarning("Không tìm thấy nhạc nền: " + musicPath);
                 }
+
+                // **Hiển thị UI
+                if (currentLevelIndex == 0)
+                {
+                    // Kiểm tra
+                    if (PlayerPrefs.GetInt("TutorialShown", 0) == 0)
+                    {
+                        StartCoroutine(ShowTutorialNextFrame());
+
+                        // Lưu trạng thái
+                        PlayerPrefs.SetInt("TutorialShown", 1);
+                        PlayerPrefs.Save();
+                    }
+                }
+
             }
             else
             {
                 Debug.LogError("Không tìm thấy prefab tại: " + levelPath);
+            }
+        }
+
+        private IEnumerator ShowTutorialNextFrame()
+        {
+            yield return null; // đợi 1 frame
+            UITutorial tutorialUI = FindObjectOfType<UITutorial>();
+            if (tutorialUI != null)
+            {
+                tutorialUI.Show();
+            }
+            else
+            {
+                Debug.LogWarning("⚠ Không tìm thấy UITutorial trong scene!");
             }
         }
 

@@ -18,6 +18,7 @@ namespace UIs
         public UIStage uiStage;
         public UIDepInfo uiDepInfo;
         public UIInventory uiInventory;
+        public UITutorial uiTutorial;
 
         [Header("UI Dialogs")]
         public UISetting uiSetting;
@@ -25,6 +26,7 @@ namespace UIs
         public UIDeath uiDeath;
         public UIWin uiWin;
         public UIHealthBar uiHealthBar;
+
         public void ShowPanel(UIPanel panel)
         {
             HideAllPanels();
@@ -65,6 +67,9 @@ namespace UIs
 
             if (uiHealthBar != null)
                 uiHealthBar.Hide();
+
+            if (uiTutorial != null)
+                uiTutorial.Hide();
         }
 
         public void ShowDialog(UIDialog dialog)
