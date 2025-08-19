@@ -12,6 +12,7 @@ TagManager:
   - Heal
   - Attack1_Hitbox
   - Box
+  - ShowTutorial
   layers:
   - Default
   - TransparentFX
