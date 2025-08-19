@@ -51,6 +51,8 @@ public class UIStageItem : MonoBehaviour
     {
         Debug.Log($"Click level {level}");
 
+        SoundManager.Instance.PlayClickSound();
+
         GameManager.Instance.SaveCurrentLevel(level);
 
         // Ẩn UI chọn level trước khi vào game

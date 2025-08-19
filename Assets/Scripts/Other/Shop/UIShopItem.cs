@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using ScriptableObjects.Shop;
+using Manager;
 
 namespace Other.Shop
 {
@@ -21,6 +22,7 @@ namespace Other.Shop
 
         private void OnSelect()
         {
+            SoundManager.Instance.PlayClickSound();
             if (depInfoPanel != null && weaponSO != null)
             {
                 depInfoPanel.Setup(weaponSO);

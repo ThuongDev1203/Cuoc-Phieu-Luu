@@ -185,6 +185,7 @@ public class BossController : MonoBehaviour
             StopAllCoroutines();
             ChangeState(State.Death);
             isInHitState = false;
+            Destroy(gameObject);
         }
     }
 
