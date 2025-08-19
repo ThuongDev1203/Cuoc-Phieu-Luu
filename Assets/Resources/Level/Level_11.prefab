@@ -29326,7 +29326,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _groundCheckRadius: 0.2
-  _currentDepSO: {fileID: 0}
+  _currentDepSO: {fileID: 11400000, guid: 6c338b853fef53a41bb6e39e97e258af, type: 2}
   _depSpawnPoint: {fileID: 3351522025301066864}
 --- !u!114 &1057641864822223452
 MonoBehaviour:
