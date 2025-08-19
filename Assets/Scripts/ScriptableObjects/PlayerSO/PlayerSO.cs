@@ -6,9 +6,9 @@ public class PlayerSO : ScriptableObject
 {
     [SerializeField] private PlayerDataSO _data;
     public PlayerDataSO Data => _data;
-
-    public void LoadData()
+    public void ResetData()
     {
-        // Optional logic here
+        _data.ResetHealth();
     }
+
 }

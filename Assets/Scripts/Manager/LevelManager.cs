@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Other;
 using UIs;
+using SriptableObjects.PlayerSO;
 
 namespace Manager
 {
@@ -13,6 +14,9 @@ namespace Manager
 
         [Header("Vị trí spawn level")]
         public Transform levelParent;
+
+        [Header("Player Data")]
+        [SerializeField] private PlayerSO playerSO; // gán trong Inspector
 
         private GameObject currentLevelInstance;
         private int currentLevelIndex;
@@ -58,20 +62,23 @@ namespace Manager
                     Debug.LogWarning("Không tìm thấy nhạc nền: " + musicPath);
                 }
 
-                // **Hiển thị UI
+                // **Hiển thị UI Tutorial
                 if (currentLevelIndex == 0)
                 {
-                    // Kiểm tra
                     if (PlayerPrefs.GetInt("TutorialShown", 0) == 0)
                     {
                         StartCoroutine(ShowTutorialNextFrame());
-
-                        // Lưu trạng thái
                         PlayerPrefs.SetInt("TutorialShown", 1);
                         PlayerPrefs.Save();
                     }
                 }
 
+                // 🔥 Reset máu player mỗi khi load level
+                if (playerSO != null)
+                {
+                    playerSO.ResetData();
+                    Debug.Log($"[LevelManager] Reset Player máu = {playerSO.Data.Health}/{playerSO.Data.MaxHealth}");
+                }
             }
             else
             {

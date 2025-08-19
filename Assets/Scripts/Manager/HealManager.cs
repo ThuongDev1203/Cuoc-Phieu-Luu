@@ -27,8 +27,7 @@ namespace Manager
         {
             int beforeHeal = playerSO.Data.Health;
 
-            // Công thức chuẩn: không vượt quá MaxHealth
-            int newHealth = playerSO.Data.Health + amount;
+            int newHealth = beforeHeal + amount;
             if (newHealth > playerSO.Data.MaxHealth)
             {
                 newHealth = playerSO.Data.MaxHealth;
@@ -37,10 +36,8 @@ namespace Manager
             playerSO.Data.Health = newHealth;
 
             int healed = newHealth - beforeHeal;
-
             Debug.Log($"[HealManager] Player hồi {healed}/{amount}. Máu hiện tại: {playerSO.Data.Health}/{playerSO.Data.MaxHealth}");
         }
-
 
         /// <summary>
         /// Lấy máu hiện tại

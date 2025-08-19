@@ -80,7 +80,7 @@ namespace Animation.Player.Controller
             //Load Data
             if (_playerSO != null)
             {
-                _playerSO.LoadData();
+                //_playerSO.LoadData();
                 _maxJumpCount = _playerSO.Data.MaxJumpCount;
             }
 
