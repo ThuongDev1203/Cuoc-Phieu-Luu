@@ -15,7 +15,7 @@ MonoBehaviour:
   _data:
     trapName: 
     damage: 20
-    fallDelay: 0.2
-    activationDistance: 5
-    destroyAfter: 2
-    gravityScale: 1.5
+    fallDelay: 0
+    activationDistance: 0
+    destroyAfter: 0
+    gravityScale: 0
