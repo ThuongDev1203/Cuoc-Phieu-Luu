@@ -25,16 +25,14 @@ public class PassLevelBoss : MonoBehaviour
     }
     void Update()
     {
-        if (bossController != null && bossController.health <= 0 && !pass)
+        if (checkPass() && !pass)
         {
-            
+            hidepass();
+            pass = true;
         }
     }
-    private void showkey()
-    {
-        gameObject.SetActive(true);
-    }
-    private void hidekey()
+
+    private void hidepass()
     {
         gameObject.SetActive(false);
     }
