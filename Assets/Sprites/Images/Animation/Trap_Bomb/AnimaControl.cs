@@ -30,17 +30,14 @@ public class AnimaControl : MonoBehaviour
         {
             hasExploded = true;
 
-            // Kích hoạt animation nổ
             if (anim != null)
             {
                 anim.SetTrigger("Hitbomb");
             }
-
-            ExecuteBoom();
         }
     }
 
-    private void ExecuteBoom()
+    public void ExecuteBoom()
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius, targetLayer);
 
