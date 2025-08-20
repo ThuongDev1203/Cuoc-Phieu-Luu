@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: StarFish
   m_EditorClassIdentifier: 
   _data:
+    _enemyIcon: {fileID: 0}
     _enemyName: StarFish
-    _health: 0
+    _health: 15
     _speed: 0
     _attackDamage: 10
     _detectRange: 0
