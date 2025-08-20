@@ -21,6 +21,7 @@ public class PassLevelBoss : MonoBehaviour
         {
             return true;
         }
+        return false;
     }
     void Update()
     {
