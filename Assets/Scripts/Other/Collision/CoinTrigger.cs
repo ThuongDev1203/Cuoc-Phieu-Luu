@@ -7,7 +7,7 @@ namespace Other
 {
     public class CoinTrigger : MonoBehaviour
     {
-        [SerializeField] private int coinValue = 10;
+        [SerializeField] private int coinValue = 5;
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
