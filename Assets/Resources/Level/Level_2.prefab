@@ -75783,7 +75783,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2190858630116292106
 Transform:
   m_ObjectHideFlags: 0
@@ -79073,7 +79073,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9104739361027217115, guid: 03afd73157bfbfb4a9926fc0c41d34b8, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Enemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

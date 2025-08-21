@@ -12,7 +12,7 @@ namespace Other
         private string _playerTag = "Player";
 
         [Header("Offset")]
-        private Vector3 _offset = new Vector3(0f, 1.5f, -10f);
+        private Vector3 _offset = new Vector3(0f, 0.5f, -10f);
 
         [Header("Smooth")]
         private float _smoothTime = 0.2f;
