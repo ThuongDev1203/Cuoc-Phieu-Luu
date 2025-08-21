@@ -19,6 +19,8 @@ namespace UIs
         private void Start()
         {
             canvasGroup.alpha = 1f;
+            canvasGroup.interactable = false;
+            canvasGroup.blocksRaycasts = true;
             loadingSlider.value = 0f;
 
             StartCoroutine(FillLoadingBar());
