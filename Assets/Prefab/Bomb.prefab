@@ -183,9 +183,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6162a8d896be1c747be6511fd64e395f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BomSO: {fileID: 11400000, guid: 3f0f8a9dbccb2f9439788ed8daf53885, type: 2}
+  bombSO: {fileID: 11400000, guid: 3f0f8a9dbccb2f9439788ed8daf53885, type: 2}
   explosionRadius: 2
   targetLayer:
     serializedVersion: 2
-    m_Bits: 8
-  anim: {fileID: 2254827310988388660}
+    m_Bits: 136

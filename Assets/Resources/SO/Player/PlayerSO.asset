@@ -14,12 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data:
     _playerName: Young
-    _speed: 7
-    _jumpForce: 10
+    _speed: 8
+    _jumpForce: 14
     _maxJumpCount: 2
-    _health: 100
+    _health: 83
     _maxHealth: 100
     _attackDamage: 10
-    _attack1Damage: 20
-    _attack2Damage: 10
     _attackRange: 1.5
