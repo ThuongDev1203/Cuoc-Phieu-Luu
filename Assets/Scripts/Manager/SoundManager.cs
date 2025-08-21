@@ -20,6 +20,7 @@ namespace Manager
         public AudioClip boxBreak;
         public AudioClip win;
         public AudioClip lose;
+        public AudioClip bom;
 
 
         private AudioSource musicSource;
@@ -170,6 +171,12 @@ namespace Manager
         {
             if (lose == null) return;
             sfxSource.PlayOneShot(lose);
+        }
+
+        public void PlayBom()
+        {
+            if (bom == null) return;
+            sfxSource.PlayOneShot(bom);
         }
 
         // -----------------------------

@@ -78815,6 +78815,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sandbug (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 9104739361027217115, guid: 03afd73157bfbfb4a9926fc0c41d34b8, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

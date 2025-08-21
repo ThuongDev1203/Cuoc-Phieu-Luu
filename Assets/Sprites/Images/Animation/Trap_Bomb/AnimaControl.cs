@@ -2,10 +2,11 @@ using System.Collections;
 using UnityEngine;
 using Animation.Player.Controller;
 using Other.Collision;
+using Manager;
 
 public class AnimaControl : MonoBehaviour
 {
-        [Header("Bomb Settings")]
+    [Header("Bomb Settings")]
     [SerializeField] private TrapSO bombSO;
     [SerializeField] private float explosionRadius = 2f;
     [SerializeField] private LayerMask targetLayer;
@@ -32,6 +33,8 @@ public class AnimaControl : MonoBehaviour
         // Chỉ kích hoạt khi va chạm Player
         if (collision.gameObject.CompareTag("Player"))
         {
+            SoundManager.Instance.PlayBom();
+
             hasExploded = true;
 
             if (anim != null)
