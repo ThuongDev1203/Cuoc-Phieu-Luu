@@ -69,8 +69,10 @@ namespace UIs
 
             Hide();
             GameManager.Instance.uiManager.uiGame.Show();
-            GameManager.Instance.LoadGame(); // load level hiện tại
+            GameManager.Instance.uiManager.uiGame.SetLevelText(currentLevel);
+            GameManager.Instance.LoadGame(currentLevel); // load level hiện tại
         }
+
 
         /// <summary>
         /// Setting button click handler

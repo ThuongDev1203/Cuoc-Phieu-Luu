@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 namespace UIs
 {
@@ -17,6 +18,10 @@ namespace UIs
 
         [Header("Refs")]
         [SerializeField] private CanvasGroup _canvasGroup; // cho phép drag thả trong Inspector
+
+        [Header("Auto Hide Settings")]
+        [SerializeField] private float autoHideTime = 3f;
+        private Coroutine hideCoroutine;
 
         protected override void Awake()
         {
@@ -38,6 +43,9 @@ namespace UIs
             Hide();
         }
 
+        /// <summary>
+        /// Thiết lập target mới
+        /// </summary>
         public void SetTarget(Sprite icon, string name, int maxHealth, int currentHealth)
         {
             if (_targetIcon) _targetIcon.sprite = icon;
@@ -53,8 +61,15 @@ namespace UIs
                 _targetHealthText.text = $"{currentHealth}/{maxHealth}";
 
             Show();
+
+            // Restart timer ẩn
+            if (hideCoroutine != null) StopCoroutine(hideCoroutine);
+            hideCoroutine = StartCoroutine(AutoHideRoutine());
         }
 
+        /// <summary>
+        /// Cập nhật giá trị máu
+        /// </summary>
         public void UpdateHealth(int currentHealth)
         {
             if (_healthBarSlider)
@@ -63,7 +78,25 @@ namespace UIs
             if (_targetHealthText)
                 _targetHealthText.text = $"{currentHealth}/{(int)_healthBarSlider.maxValue}";
 
-            if (currentHealth <= 0) Hide();
+            if (currentHealth <= 0)
+            {
+                if (hideCoroutine != null) StopCoroutine(hideCoroutine);
+                Hide();
+                return;
+            }
+
+            // Reset timer ẩn
+            if (hideCoroutine != null) StopCoroutine(hideCoroutine);
+            hideCoroutine = StartCoroutine(AutoHideRoutine());
+        }
+
+        /// <summary>
+        /// Coroutine tự ẩn sau autoHideTime giây
+        /// </summary>
+        private IEnumerator AutoHideRoutine()
+        {
+            yield return new WaitForSeconds(autoHideTime);
+            Hide();
         }
 
         public override void Show()
@@ -78,7 +111,7 @@ namespace UIs
                 _canvasGroup.blocksRaycasts = true;
             }
 
-            //lên trên cùng Canvas
+            // Lên trên cùng Canvas
             transform.SetAsLastSibling();
         }
 
@@ -89,6 +122,13 @@ namespace UIs
                 _canvasGroup.alpha = 0f;
                 _canvasGroup.interactable = false;
                 _canvasGroup.blocksRaycasts = false;
+            }
+
+            // Dừng coroutine nếu đang chạy
+            if (hideCoroutine != null)
+            {
+                StopCoroutine(hideCoroutine);
+                hideCoroutine = null;
             }
         }
     }

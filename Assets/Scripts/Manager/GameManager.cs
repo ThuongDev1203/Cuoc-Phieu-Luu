@@ -20,6 +20,9 @@ namespace Manager
         public CoinManager coinManager;
         public DiamondManager diamondManager;
 
+        // ---------------- LEVEL STATE ----------------
+        private int selectedLevel = 1; // level mà người chơi chọn để chơi
+
         private void Awake()
         {
             Application.targetFrameRate = 60;
@@ -44,21 +47,67 @@ namespace Manager
             uiManager.uiLobby.Show();
         }
 
+        // ---------------- LEVEL LOGIC ----------------
+
+        /// <summary>
+        /// Trả về level cao nhất đã mở khóa
+        /// </summary>
         public int GetCurrentLevel()
         {
-            return PlayerPrefs.GetInt("CurrentLevel", 1); // default level 1
+            return PlayerPrefs.GetInt("CurrentLevel", 1); // mặc định level 1
         }
 
-        public void SaveCurrentLevel(int level)
+        /// <summary>
+        /// Lưu currentLevel (level cao nhất đã mở)
+        /// </summary>
+        private void SaveCurrentLevel(int level)
         {
             PlayerPrefs.SetInt("CurrentLevel", level);
+            PlayerPrefs.Save();
         }
 
-        public void LoadGame()
+        /// <summary>
+        /// Set selectedLevel khi người chơi chọn trong UIStage
+        /// </summary>
+        public void SetSelectedLevel(int level)
         {
-            int currentLevel = GetCurrentLevel();
-            levelManager.LoadLevel(currentLevel - 1); // vì index bắt đầu từ 0
+            selectedLevel = level;
         }
+
+        /// <summary>
+        /// Lấy selectedLevel hiện tại
+        /// </summary>
+        public int GetSelectedLevel()
+        {
+            return selectedLevel;
+        }
+
+        /// <summary>
+        /// Load game theo selectedLevel
+        /// </summary>
+        public void LoadGame(int levelToLoad = -1)
+        {
+            // Nếu không truyền level, load selectedLevel
+            int level = levelToLoad > 0 ? levelToLoad : GetSelectedLevel();
+            levelManager.LoadLevel(level - 1); // vì index bắt đầu từ 0
+        }
+
+
+        /// <summary>
+        /// Gọi khi hoàn thành một level để mở khóa level tiếp theo
+        /// </summary>
+        public void CompleteLevel(int level)
+        {
+            int savedLevel = GetCurrentLevel();
+
+            if (level >= savedLevel)
+            {
+                // mở khóa level tiếp theo
+                SaveCurrentLevel(level + 1);
+            }
+        }
+
+        // ---------------- CURRENCY ----------------
 
         public void UpdateCoinUI(int coin)
         {
@@ -73,21 +122,6 @@ namespace Manager
         {
             if (uiManager.uiGame != null)
                 uiManager.uiGame.SetDiamondText(diamond);
-        }
-
-        /// <summary>
-        /// Gọi khi hoàn thành một level để mở khóa level tiếp theo
-        /// </summary>
-        public void CompleteLevel(int level)
-        {
-            int savedLevel = GetCurrentLevel();
-
-            if (level >= savedLevel)
-            {
-                // mở khóa level tiếp theo
-                SaveCurrentLevel(level + 1);
-                PlayerPrefs.Save();
-            }
         }
     }
 }

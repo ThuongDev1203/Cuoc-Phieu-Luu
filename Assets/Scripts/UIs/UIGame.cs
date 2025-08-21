@@ -14,6 +14,7 @@ namespace UIs
     public class UIGame : UIPanel
     {
         [Header("Game UI Elements")]
+        public TMP_Text levelText;
         public Button pauseButton;
         public Button jumpButton;
         public Button attackButton;
@@ -78,6 +79,9 @@ namespace UIs
         {
             base.Show();
             ResetLevelUI();
+
+            int currentLevel = GameManager.Instance.GetSelectedLevel();
+            SetLevelText(currentLevel);
         }
 
         /// <summary>
@@ -192,6 +196,13 @@ namespace UIs
             SetCoinText(0);
             SetDiamondText(0);
         }
+
+        public void SetLevelText(int level)
+        {
+            if (levelText != null)
+                levelText.text = $"Level {level}";
+        }
+
 
     }
 }

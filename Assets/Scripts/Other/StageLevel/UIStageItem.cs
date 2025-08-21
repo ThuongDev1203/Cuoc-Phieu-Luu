@@ -44,12 +44,20 @@ public class UIStageItem : MonoBehaviour
 
         SoundManager.Instance.PlayClickSound();
 
-        GameManager.Instance.SaveCurrentLevel(level);
+        // Đừng ghi đè currentLevel ở đây!
+        // GameManager.Instance.SaveCurrentLevel(level);
 
-        // Ẩn UI chọn level trước khi vào game
+        // Chỉ gán level được chọn để load
+        GameManager.Instance.SetSelectedLevel(level);
+
+        // Ẩn UI
         GameManager.Instance.uiManager.ShowPanel(GameManager.Instance.uiManager.uiGame);
+
+        //Hiển thị level chọn
+        GameManager.Instance.uiManager.uiGame.SetLevelText(level);
 
         // Load game
         GameManager.Instance.LoadGame();
     }
+
 }

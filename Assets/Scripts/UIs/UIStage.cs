@@ -55,6 +55,28 @@ namespace UIs
             base.Hide();
         }
 
+        public void RefreshHighlight()
+        {
+            int currentLevel = GameManager.Instance.GetCurrentLevel();
+
+            foreach (Transform child in container)
+            {
+                UIStageItem item = child.GetComponent<UIStageItem>();
+                if (item != null)
+                {
+                    bool isUnlocked = item.textLevel != null && int.Parse(item.textLevel.text) <= currentLevel;
+                    bool isCurrent = item.textLevel != null && int.Parse(item.textLevel.text) == currentLevel;
+
+                    item.highlight.SetActive(isUnlocked && isCurrent);
+                    item.lockIcon.SetActive(!isUnlocked);
+                    item.unLockIcon.SetActive(isUnlocked);
+                    item.textLevel.gameObject.SetActive(isUnlocked);
+                    item.button.interactable = isUnlocked;
+                }
+            }
+        }
+
+
         public void SetCoinText(int coin)
         {
             if (coinText != null)

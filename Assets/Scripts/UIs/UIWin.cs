@@ -74,15 +74,29 @@ namespace UIs
             SoundManager.Instance.PlayClickSound();
             Hide();
 
-            int currentLevel = GameManager.Instance.levelManager.GetCurrentLevelIndex();
-            int nextLevel = currentLevel + 1;
+            int selectedLevel = GameManager.Instance.GetSelectedLevel();
+            int nextLevel = selectedLevel + 1;
 
-            if (nextLevel < GameManager.Instance.levelManager.levelNames.Count)
+            if (nextLevel <= GameManager.Instance.levelManager.levelNames.Count)
             {
-                GameManager.Instance.SaveCurrentLevel(nextLevel + 1);
-                GameManager.Instance.levelManager.LoadLevel(nextLevel);
+                // Mở khóa level hiện tại
+                GameManager.Instance.CompleteLevel(selectedLevel);
+
+                // Refresh highlight level mới
+                GameManager.Instance.uiManager.uiStage.RefreshHighlight();
+
+                GameManager.Instance.uiManager.uiGame.SetLevelText(nextLevel);
+
+                // Gán level tiếp theo và load game
+                GameManager.Instance.SetSelectedLevel(nextLevel);
+                GameManager.Instance.LoadGame();
+            }
+            else
+            {
+                ReturnToLobby();
             }
         }
+
 
         private void ReturnToLobby()
         {
