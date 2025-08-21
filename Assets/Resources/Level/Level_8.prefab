@@ -178829,6 +178829,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3889088653402097837}
     m_Modifications:
+    - target: {fileID: 1617084731194724669, guid: 87aeb726c053e7949a02747080620391, type: 3}
+      propertyPath: m_BodyType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2730634381874990105, guid: 87aeb726c053e7949a02747080620391, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.8
@@ -179866,6 +179870,10 @@ PrefabInstance:
     - target: {fileID: 869033760273370592, guid: 95e74ca17ddd9c1428adc5a4877e5b0d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3799423171572246920, guid: 95e74ca17ddd9c1428adc5a4877e5b0d, type: 3}
+      propertyPath: m_BodyType
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7624547682260385975, guid: 95e74ca17ddd9c1428adc5a4877e5b0d, type: 3}
       propertyPath: m_Name
@@ -182915,6 +182923,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3799423171572246920, guid: 95e74ca17ddd9c1428adc5a4877e5b0d, type: 3}
+      propertyPath: m_BodyType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7624547682260385975, guid: 95e74ca17ddd9c1428adc5a4877e5b0d, type: 3}
       propertyPath: m_Name
       value: SellEnemy (3)
@@ -183135,6 +183147,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3889088653402097837}
     m_Modifications:
+    - target: {fileID: 1617084731194724669, guid: 87aeb726c053e7949a02747080620391, type: 3}
+      propertyPath: m_BodyType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2730634381874990105, guid: 87aeb726c053e7949a02747080620391, type: 3}
       propertyPath: m_LocalPosition.x
       value: -70.61
@@ -183197,6 +183213,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3889088653402097837}
     m_Modifications:
+    - target: {fileID: 1617084731194724669, guid: 87aeb726c053e7949a02747080620391, type: 3}
+      propertyPath: m_BodyType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2730634381874990105, guid: 87aeb726c053e7949a02747080620391, type: 3}
       propertyPath: m_LocalPosition.x
       value: 58.66
@@ -184183,6 +184203,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3889088653402097837}
     m_Modifications:
+    - target: {fileID: 1617084731194724669, guid: 87aeb726c053e7949a02747080620391, type: 3}
+      propertyPath: m_BodyType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2730634381874990105, guid: 87aeb726c053e7949a02747080620391, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.74
@@ -184420,6 +184444,10 @@ PrefabInstance:
     - target: {fileID: 869033760273370592, guid: 95e74ca17ddd9c1428adc5a4877e5b0d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3799423171572246920, guid: 95e74ca17ddd9c1428adc5a4877e5b0d, type: 3}
+      propertyPath: m_BodyType
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7624547682260385975, guid: 95e74ca17ddd9c1428adc5a4877e5b0d, type: 3}
       propertyPath: m_Name
@@ -184817,6 +184845,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3889088653402097837}
     m_Modifications:
+    - target: {fileID: 1617084731194724669, guid: 87aeb726c053e7949a02747080620391, type: 3}
+      propertyPath: m_BodyType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2730634381874990105, guid: 87aeb726c053e7949a02747080620391, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.86
@@ -187293,6 +187325,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3799423171572246920, guid: 95e74ca17ddd9c1428adc5a4877e5b0d, type: 3}
+      propertyPath: m_BodyType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7624547682260385975, guid: 95e74ca17ddd9c1428adc5a4877e5b0d, type: 3}
       propertyPath: m_Name
       value: SellEnemy (1)
@@ -187723,6 +187759,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3889088653402097837}
     m_Modifications:
+    - target: {fileID: 1617084731194724669, guid: 87aeb726c053e7949a02747080620391, type: 3}
+      propertyPath: m_BodyType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2730634381874990105, guid: 87aeb726c053e7949a02747080620391, type: 3}
       propertyPath: m_LocalPosition.x
       value: 28.83

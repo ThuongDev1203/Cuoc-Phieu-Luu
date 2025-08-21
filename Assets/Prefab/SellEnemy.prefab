@@ -5069,4 +5069,4 @@ MonoBehaviour:
   isFacingRight: 1
   damage: 5
   animator: {fileID: 579896604239019407}
-  enemyVFX: {fileID: 0}
+  enemyVFX: {fileID: 8241327686601757525}

@@ -73,6 +73,14 @@ namespace Other.Dep
                     Destroy(gameObject);
                 }
             }
+            if (collision.CompareTag("ShellEnemy"))
+            {
+                Destroy(gameObject);
+            }
+            if (collision.CompareTag("StarFish"))
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }
