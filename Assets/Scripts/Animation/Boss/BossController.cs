@@ -17,7 +17,8 @@ public class BossController : MonoBehaviour
 
     private float chaseRange;
     private float moveSpeed;
-    public int health;
+    private int health;
+    public int HealthDeath  => health;
     private bool canAttack = true;
 
     private float lastAttackTime;

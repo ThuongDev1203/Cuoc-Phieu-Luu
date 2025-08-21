@@ -15,6 +15,7 @@ namespace Other.Collision
         private UIDeath _uiDeath;
         private UIGame _uiGame;
 
+
         private int _currentHealth;
 
         private void Start()
@@ -94,10 +95,15 @@ namespace Other.Collision
 
         public void TakeDamage(int damage)
         {
+            
             // Trừ máu trực tiếp vào ScriptableObject
             playerSO.Data.Health -= damage;
 
             Debug.Log($"Player nhận {damage} damage, còn {playerSO.Data.Health} máu");
+            if (playerSO.Data.Health > 0)
+            {
+                _animatorController.TriggerHit();
+            }
 
             _uiGame?.SetHealthText(playerSO.Data.Health);
 

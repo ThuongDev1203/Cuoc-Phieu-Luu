@@ -17,7 +17,7 @@ public class PassLevelBoss : MonoBehaviour
     }
     private bool checkPass()
     {
-        if (bossController != null && bossController.health <= 0)
+        if (bossController != null && bossController.HealthDeath <= 0)
         {
             return true;
         }

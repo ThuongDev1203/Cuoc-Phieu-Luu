@@ -66,7 +66,6 @@ public class ShellControll : MonoBehaviour
            if (_player != null)
             {
                 _player.ChangeState(new HitState(_player));
-                SoundManager.Instance.PlayHitPig();
 
                 if (_playerCollision != null)
                 {

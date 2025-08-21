@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Shell
   m_EditorClassIdentifier: 
   _data:
+    _enemyIcon: {fileID: 0}
     _enemyName: Shell
     _health: 100
     _speed: 0
-    _attackDamage: 15
+    _attackDamage: 7
     _detectRange: 0

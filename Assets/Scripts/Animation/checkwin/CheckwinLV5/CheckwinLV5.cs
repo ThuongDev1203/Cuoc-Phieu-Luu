@@ -18,7 +18,7 @@ public class CheckwinLV5 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (bossController != null && bossController.health <= 0){
+        if (bossController != null && bossController.HealthDeath <= 0){
             OpenWool.SetActive(true);
         }
     }
