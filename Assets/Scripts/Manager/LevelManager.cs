@@ -16,12 +16,17 @@ namespace Manager
         public Transform levelParent;
 
         [Header("Player Data")]
-        [SerializeField] private PlayerSO playerSO; // gán trong Inspector
+        [SerializeField] private PlayerSO playerSO;
 
         private GameObject currentLevelInstance;
         private int currentLevelIndex;
 
-        // Load level bình thường
+        void Awake()
+        {
+            Application.targetFrameRate = 60;
+        }
+
+        // Load level
         public void LoadLevel(int index)
         {
             if (index < 0 || index >= levelNames.Count)
@@ -47,7 +52,7 @@ namespace Manager
                 currentLevelInstance = Instantiate(prefab, levelParent);
                 StartCoroutine(AssignCameraToPlayer());
 
-                // Bổ sung: gọi làm mới Boss sau khi load level xong
+                //gọi làm mới Boss sau khi load level xong
                 StartCoroutine(RefreshBossesAfterLevelLoad());
 
                 // Load nhạc nền tương ứng từ Resources/Audio/Level
@@ -62,7 +67,7 @@ namespace Manager
                     Debug.LogWarning("Không tìm thấy nhạc nền: " + musicPath);
                 }
 
-                // **Hiển thị UI Tutorial
+                //UI Tutorial
                 if (currentLevelIndex == 0)
                 {
                     if (PlayerPrefs.GetInt("TutorialShown", 0) == 0)
