@@ -7,40 +7,31 @@ using UIs;
 public class UIStageItem : MonoBehaviour
 {
     public TextMeshProUGUI textLevel;
-    public Image[] stars;
     public GameObject lockIcon;
+    public GameObject unLockIcon;
     public GameObject highlight;
     public Button button;
 
     private int level;
 
-    public void Setup(int level, int starCount, bool isUnlocked, bool isCurrent)
+    public void Setup(int level, bool isUnlocked, bool isCurrent)
     {
         this.level = level;
 
         // Hiện số level
         textLevel.text = level.ToString();
 
-        // Hiện sao nếu mở
-        for (int i = 0; i < stars.Length; i++)
-        {
-            stars[i].enabled = i < starCount;
-        }
-
-        // Lock
+        // Lock / Unlock
         lockIcon.SetActive(!isUnlocked);
+        unLockIcon.SetActive(isUnlocked);
         textLevel.gameObject.SetActive(isUnlocked);
-        foreach (var star in stars)
-        {
-            star.gameObject.SetActive(isUnlocked);
-        }
 
         // Highlight nếu là level hiện tại
-        highlight.SetActive(isCurrent);
+        highlight.SetActive(isUnlocked && isCurrent);
 
         // Button
         button.interactable = isUnlocked;
-        button.onClick.RemoveAllListeners(); // tránh add nhiều lần
+        button.onClick.RemoveAllListeners();
         if (isUnlocked)
         {
             button.onClick.AddListener(OnClick);
@@ -61,5 +52,4 @@ public class UIStageItem : MonoBehaviour
         // Load game
         GameManager.Instance.LoadGame();
     }
-
 }

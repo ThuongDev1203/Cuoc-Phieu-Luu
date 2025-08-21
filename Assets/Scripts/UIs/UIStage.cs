@@ -32,20 +32,16 @@ namespace UIs
                 GameObject go = Instantiate(stageItemPrefab, container);
                 UIStageItem item = go.GetComponent<UIStageItem>();
 
-                int starCount = PlayerPrefs.GetInt($"Level_{i}_Star", 0);
-                bool isUnlocked = i <= currentLevel;
-                bool isCurrent = i == currentLevel;
+                bool isUnlocked = i <= currentLevel;   // đã mở nếu <= current
+                bool isCurrent = i == currentLevel;    // level hiện tại
 
-                item.Setup(i, starCount, isUnlocked, isCurrent);
+                item.Setup(i, isUnlocked, isCurrent);
             }
 
             if (closeButton != null)
                 closeButton.onClick.AddListener(Hide);
         }
 
-        /// <summary>
-        /// Show UI Game when entering the game.
-        /// </summary>
         public override void Show()
         {
             base.Show();
@@ -54,9 +50,6 @@ namespace UIs
             SetDiamondText(GameManager.Instance.diamondManager.TotalDiamond);
         }
 
-        /// <summary>
-        /// Hide UI Game when switching to another screen.
-        /// </summary>
         public override void Hide()
         {
             base.Hide();

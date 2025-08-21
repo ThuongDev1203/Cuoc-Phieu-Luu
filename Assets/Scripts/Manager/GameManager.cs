@@ -59,10 +59,11 @@ namespace Manager
             int currentLevel = GetCurrentLevel();
             levelManager.LoadLevel(currentLevel - 1); // vì index bắt đầu từ 0
         }
+
         public void UpdateCoinUI(int coin)
         {
             if (uiManager.uiGame != null)
-                uiManager.uiGame.SetCoinText(coin); // gọi trực tiếp
+                uiManager.uiGame.SetCoinText(coin);
 
             if (uiManager.uiLobby != null)
                 uiManager.uiLobby.SetCoinText(coin);
@@ -70,7 +71,23 @@ namespace Manager
 
         public void UpdateDiamondUI(int diamond)
         {
-            uiManager.uiGame.SetDiamondText(diamond); // gọi trực tiếp
+            if (uiManager.uiGame != null)
+                uiManager.uiGame.SetDiamondText(diamond);
+        }
+
+        /// <summary>
+        /// Gọi khi hoàn thành một level để mở khóa level tiếp theo
+        /// </summary>
+        public void CompleteLevel(int level)
+        {
+            int savedLevel = GetCurrentLevel();
+
+            if (level >= savedLevel)
+            {
+                // mở khóa level tiếp theo
+                SaveCurrentLevel(level + 1);
+                PlayerPrefs.Save();
+            }
         }
     }
 }
