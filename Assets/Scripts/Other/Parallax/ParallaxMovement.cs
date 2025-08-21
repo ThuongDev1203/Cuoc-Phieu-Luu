@@ -6,9 +6,9 @@ namespace Parallax
 {
     public class ParallaxMovement : MonoBehaviour
     {
-        Transform cam; //Main Camera
+        Transform cam; // Main Camera
         Vector3 camStartPos;
-        float distance; //jarak antara start camera posisi dan current posisi
+        float distanceX;
 
         GameObject[] backgrounds;
         Material[] mat;
@@ -19,7 +19,6 @@ namespace Parallax
         [Range(0.01f, 1f)]
         public float parallaxSpeed;
 
-        // Start is called before the first frame update
         void Start()
         {
             cam = Camera.main.transform;
@@ -41,7 +40,7 @@ namespace Parallax
 
         void BackSpeedCalculate(int backCount)
         {
-            for (int i = 0; i < backCount; i++) //find the farthest background
+            for (int i = 0; i < backCount; i++) // tìm background xa nhất
             {
                 if ((backgrounds[i].transform.position.z - cam.position.z) > farthestBack)
                 {
@@ -49,7 +48,7 @@ namespace Parallax
                 }
             }
 
-            for (int i = 0; i < backCount; i++) //set the speed of bacground
+            for (int i = 0; i < backCount; i++) // tính tốc độ
             {
                 backSpeed[i] = 1 - (backgrounds[i].transform.position.z - cam.position.z) / farthestBack;
             }
@@ -57,13 +56,21 @@ namespace Parallax
 
         private void LateUpdate()
         {
-            distance = cam.position.x - camStartPos.x;
-            transform.position = new Vector3(cam.position.x - 1, transform.position.y, 9.92f);
+            // chỉ parallax theo trục X
+            distanceX = cam.position.x - camStartPos.x;
+
+            // background đi theo cả X và Y của camera
+            transform.position = new Vector3(
+                cam.position.x - 1,   // giữ gốc X theo camera
+                cam.position.y,       // cập nhật theo Y camera
+                transform.position.z  // giữ nguyên Z
+            );
 
             for (int i = 0; i < backgrounds.Length; i++)
             {
                 float speed = backSpeed[i] * parallaxSpeed;
-                mat[i].SetTextureOffset("_MainTex", new Vector2(distance, 0) * speed);
+                // chỉ offset theo X
+                mat[i].SetTextureOffset("_MainTex", new Vector2(distanceX, 0) * speed);
             }
         }
     }
