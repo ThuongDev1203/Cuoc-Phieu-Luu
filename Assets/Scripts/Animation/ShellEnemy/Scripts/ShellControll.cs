@@ -8,20 +8,21 @@ using UnityEngine;
 
 public class ShellControll : MonoBehaviour
 {
-    public EnemyAISO enemyAISO; 
-    public Transform attackRange; 
-    public float attackRangeRadius = 2f; 
-    public LayerMask playerLayer; 
-    public bool isFacingRight = true; 
-    public int damage; 
-    private int hitCount = 0; 
+    public EnemyAISO enemyAISO;
+    public Transform attackRange;
+    public float attackRangeRadius = 2f;
+    public LayerMask playerLayer;
+    public bool isFacingRight = true;
+    public int damage;
+    private int hitCount = 0;
     private bool isDead = false;
-    private bool isAttacking = false; 
-    public Animator animator; 
+    private bool isAttacking = false;
+    public Animator animator;
     public EnemyVFX enemyVFX;
     private Rigidbody2D _rb;
     private PlayerController _player;
     private PlayerCollision _playerCollision;
+
     void Start()
     {
         _player = FindObjectOfType<PlayerController>();
@@ -33,6 +34,7 @@ public class ShellControll : MonoBehaviour
             Debug.LogError("Animator component is missing on the ShellControll script.");
         }
     }
+
     public void ResetAttack()
     {
         isAttacking = false;
@@ -43,35 +45,25 @@ public class ShellControll : MonoBehaviour
         if (isDead) return;
 
         Collider2D player = Physics2D.OverlapCircle(attackRange.position, attackRangeRadius, playerLayer);
-    if (player != null)
-    {
-        isAttacking = true;
-        animator.SetTrigger("isAttacking"); // Attack là trigger
-        animator.SetBool("isIdle", false);  // Đang tấn công thì không idle
-        FacePlayer(player.transform);
-    }
-    else
-    {
-        isAttacking = false;
-        animator.SetBool("isIdle", true);   // Idle là bool
-    }
-
+        if (player != null)
+        {
+            isAttacking = true;
+            animator.SetTrigger("isAttacking");
+            animator.SetBool("isIdle", false);
+            FacePlayer(player.transform);
+        }
+        else
+        {
+            isAttacking = false;
+            animator.SetBool("isIdle", true);
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") && isAttacking)
+        if (collision.gameObject.CompareTag("Player"))
         {
-         damage = (int)enemyAISO.Data.AttackDamage;
-           if (_player != null)
-            {
-                _player.ChangeState(new HitState(_player));
-
-                if (_playerCollision != null)
-                {
-                    _playerCollision.TakeDamage(damage);
-                }
-            }
+            // Kiểm tra nếu Player nhảy lên đầu Shell
             if (collision.transform.position.y > transform.position.y)
             {
                 hitCount++;
@@ -82,7 +74,6 @@ public class ShellControll : MonoBehaviour
                         enemyVFX.PlayVFX(transform.position);
                     }
                     isDead = true;
-
                     gameObject.SetActive(false);
                 }
             }
@@ -95,54 +86,35 @@ public class ShellControll : MonoBehaviour
         direction.z = 0;
 
         bool playerIsOnRight = direction.x > 0;
-
-        if (playerIsOnRight && !isFacingRight)
-        {
-            Flip(); 
-        }
-        else if (!playerIsOnRight && isFacingRight)
-        {
-            Flip();
-        }
+        if (playerIsOnRight && !isFacingRight) Flip();
+        else if (!playerIsOnRight && isFacingRight) Flip();
     }
+
     void Flip()
     {
         isFacingRight = !isFacingRight;
-
         transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
     }
 
-    // void Attack(GameObject player)
-    // {
-    //     // Giảm máu của nhân vật
-    //     CharacterController playerHealth = player.GetComponent<CharacterController>();
-    //     if (playerHealth != null)
-    //     {
-    //         playerHealth.TriggerHitEffect();
-    //         playerHealth.TakeDamage(damage);
-    //     }
-    // }
-
-    //cắn
     public void OnBite()
     {
-        // Kiểm tra xem có nhân vật trong vùng tấn công không
+        if (isDead) return;
+
         Collider2D player = Physics2D.OverlapCircle(attackRange.position, attackRangeRadius, playerLayer);
         if (player != null)
         {
+            damage = (int)enemyAISO.Data.AttackDamage;
 
-          //  Attack(player.gameObject); // Gọi hàm tấn công
+            if (_playerCollision != null)
+                _playerCollision.TakeDamage(damage);
         }
     }
 
     void OnDrawGizmosSelected()
     {
-        if (attackRange == null)
-            return;
+        if (attackRange == null) return;
 
         Gizmos.color = Color.red;
-
-        // Vẽ hình tròn để hiển thị vùng tấn công
         Gizmos.DrawWireSphere(attackRange.position, attackRangeRadius);
     }
 }

@@ -11,7 +11,7 @@ namespace Manager
         [SerializeField] private RectTransform iconTransform;
 
         [Header("Settings")]
-        public float fullScale = 3f; // scale cuối cùng khi zoom to
+        public float fullScale = 3.5f; // scale cuối cùng khi zoom to
         public float transitionTime = 2f;
 
         private void Awake()
