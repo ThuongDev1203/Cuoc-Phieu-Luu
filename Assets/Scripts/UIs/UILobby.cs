@@ -28,6 +28,9 @@ namespace UIs
         public TMP_Text coinText;
         public TMP_Text diamondText;
 
+        [Header("Level UI")]
+        public TMP_Text levelText; // hiển thị level hiện tại
+
         protected override void Awake()
         {
             base.Awake();
@@ -57,13 +60,16 @@ namespace UIs
         }
 
         /// <summary>
-        /// Show UI Game when entering the game.
+        /// Battle button click handler → vào thẳng level hiện tại
         /// </summary>
         private void OnPlayButtonClicked()
         {
+            int currentLevel = GameManager.Instance.GetCurrentLevel();
+            Debug.Log($"Bắt đầu chơi Level {currentLevel}");
+
             Hide();
             GameManager.Instance.uiManager.uiGame.Show();
-            GameManager.Instance.LoadGame();
+            GameManager.Instance.LoadGame(); // load level hiện tại
         }
 
         /// <summary>
@@ -74,7 +80,6 @@ namespace UIs
             Debug.Log("Đang mở UI Setting");
             GameManager.Instance.uiManager.uiSetting.Show();
         }
-
 
         /// <summary>
         /// Shop button click handler
@@ -98,7 +103,7 @@ namespace UIs
         }
 
         /// <summary>
-        /// Show UI Game when entering the game.
+        /// Show UI Lobby
         /// </summary>
         public override void Show()
         {
@@ -106,6 +111,9 @@ namespace UIs
 
             SetCoinText(GameManager.Instance.coinManager.TotalCoins);
             SetDiamondText(GameManager.Instance.diamondManager.TotalDiamond);
+
+            int currentLevel = GameManager.Instance.GetCurrentLevel();
+            SetLevelText(currentLevel);
         }
 
         public void SetCoinText(int coin)
@@ -118,6 +126,12 @@ namespace UIs
         {
             if (diamondText != null)
                 diamondText.text = diamond.ToString();
+        }
+
+        public void SetLevelText(int level)
+        {
+            if (levelText != null)
+                levelText.text = $"Level {level}";
         }
     }
 }
